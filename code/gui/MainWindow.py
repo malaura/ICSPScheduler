@@ -84,7 +84,6 @@ class MainWindow():
     def createNewPrompt(self):
         self.prompt = Toplevel(self.root)
         self.prompt.title("Create New Request")
-        self.prompt.configure(background='gray90')
 
         appHighlightFont = font.Font(family='Helvetica', size=18, weight='bold')
         titleLabel = ttk.Label(self.prompt, text="New Request", font=appHighlightFont)
@@ -105,45 +104,49 @@ class MainWindow():
         bufferEnd.grid(row=7, column=0, sticky="e")
 
         nameInput = ttk.Entry(self.prompt, width=20)
-        nameInput.grid(row=1, column=1, columnspan=2, padx=10)
+        nameInput.grid(row=1, column=1, columnspan=3, padx=10)
         monthInput = ttk.Combobox(self.prompt, width=17, state="readonly")
         monthInput['values'] = ('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
                                 'September', 'October', 'November', 'December')
-        monthInput.grid(row=2, column=1, columnspan=2, padx=10)
+        monthInput.grid(row=2, column=1, columnspan=3, padx=10)
         dayInput = ttk.Combobox(self.prompt, width=17, state="readonly")
         days = []
         for i in range(1, 32):
             days.append(i)
         dayInput['values'] = days
-        dayInput.grid(row=3, column=1, columnspan=2, padx=10)
-        startInput = ttk.Combobox(self.prompt, width=17, state="readonly")
-        startInput.grid(row=4, column=1, columnspan=2, padx=10)
+        dayInput.grid(row=3, column=1, columnspan=3, padx=10)
+        startHourInput = ttk.Combobox(self.prompt, width=3, state="readonly")
+        startHourInput.grid(row=4, column=1, sticky="E", padx=(10,0))
+        startHourInput['values'] = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+        startMinuteInput = ttk.Combobox(self.prompt, width=5, state="readonly")
+        startMinuteInput.grid(row=4, column=2, sticky="WE")
         times = []
-        for i in range(1, 13):
-            times.append(str(i) + " AM")
-        for i in range(1, 13):
-            times.append(str(i) + " PM")
-        startInput['values'] = times
+        for i in range(0, 60, 5):
+            times.append(i)
+        startMinuteInput['values'] = times
+        startTimeInput = ttk.Combobox(self.prompt, width=3, state="readonly")
+        startTimeInput.grid(row=4, column=3, padx=(0,10), sticky="W")
+        startTimeInput['values'] = ("AM", "PM")
+        #startInput['values'] = times
         endInput = ttk.Combobox(self.prompt, width=17, state="readonly")
-        endInput.grid(row=5, column=1, columnspan=2, padx=10)
-        endInput['values'] = times
+        endInput.grid(row=5, column=1, columnspan=3, padx=10)
         bufferStartInput = ttk.Combobox(self.prompt, width=17, state="readonly")
-        bufferStartInput.grid(row=6, column=1, columnspan=2, padx=10)
+        bufferStartInput.grid(row=6, column=1, columnspan=3, padx=10)
         bufferList = []
         for i in range(0, 65, 5):
             bufferList.append(i)
         bufferStartInput['values'] = bufferList
         bufferEndInput = ttk.Combobox(self.prompt, width=17, state="readonly")
-        bufferEndInput.grid(row=7, column=1, columnspan=2, padx=10)
+        bufferEndInput.grid(row=7, column=1, columnspan=3, padx=10)
         bufferEndInput['values'] = bufferList
         assignedView = Listbox(self.prompt, width=20, height=10)
-        assignedView.grid(row=8, column=0, padx=5, pady=5, sticky="W")
+        assignedView.grid(row=8, column=0, columnspan=3, padx=5, pady=5, sticky="W")
         availableView = Listbox(self.prompt, width=20, height=10)
-        availableView.grid(row=8, column=1, padx=5, pady=5, sticky="E")
+        availableView.grid(row=8, column=1, columnspan=3, padx=5, pady=5, sticky="E")
 
         cancelButton = ttk.Button(self.prompt, text="Cancel", command=self.prompt.destroy)
         cancelButton.grid(row=9, column=0, sticky="W", padx=5, pady=5)
         searchButton = ttk.Button(self.prompt, text="Search")
-        searchButton.grid(row=9, column=1, sticky="E", padx=5)
+        searchButton.grid(row=9, column=1, sticky="E", columnspan=3, padx=5)
         confirmButton = ttk.Button(self.prompt, text="Confirm")
-        confirmButton.grid(row=10, column=1, sticky="E", padx=5, pady=(0,5))
+        confirmButton.grid(row=10, column=1, sticky="E", columnspan=3, padx=5, pady=(0,5))
