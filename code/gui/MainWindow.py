@@ -17,6 +17,10 @@ class MainWindow():
 
     def initializeUI(self):
         menu = Menu(self.root)
+        # Use a different image if the sys platform is a Mac
+        if sys.platform == 'darwin':
+            self.root.maxsize(height=350, width=1200)
+            self.root.minsize(height=300, width=1000)
         self.root.config(menu=menu)
         filemenu = Menu(menu)
         menu.add_cascade(label="File", menu=filemenu)
@@ -31,7 +35,7 @@ class MainWindow():
         self.rightFrame.grid(row=0, column=2, sticky=NS)
 
         # Initalize left frame widgets
-        requestLabel = Label(self.leftFrame, text="Requests")
+        requestLabel = Label(self.leftFrame, text="Requests", background="gray90")
         requestLabel.grid(column=0, row=0, columnspan=2)
         requestView = Listbox(self.leftFrame, height=15, width=20)
         requestView.grid(row=1, column=0, padx=5, columnspan=2)
@@ -43,7 +47,7 @@ class MainWindow():
 
         # Initalize central frame widgets
         appHighlightFont = font.Font(family='Helvetica', size=18, weight='bold')
-        monthLabel = Label(self.centralFrame, text=self.month, font=appHighlightFont)
+        monthLabel = Label(self.centralFrame, text=self.month, font=appHighlightFont, background="gray90")
         monthLabel.grid(column=0, row=0, columnspan=2)
         leftButton = ttk.Button(self.centralFrame, text="<", width=5)
         leftButton.grid(column=4, row=8, sticky=E, pady=5)
@@ -56,7 +60,7 @@ class MainWindow():
         days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Satuday"]
         count = 0
         for day in days:
-            dayLabel = Label(self.centralFrame, text=day)
+            dayLabel = Label(self.centralFrame, text=day, background="gray90")
             dayLabel.grid(row=1, column=count)
             count += 1
 
@@ -67,7 +71,7 @@ class MainWindow():
                 dayButton.grid(row=i+2, column=j)
                 count += 1
         # Initialize right frame widgets
-        studentLabel = Label(self.rightFrame, text="Students")
+        studentLabel = Label(self.rightFrame, text="Students", background="gray90")
         studentLabel.grid(row=0, column=0, columnspan=2)
         studentView = Listbox(self.rightFrame, height=15, width=20)
         studentView.grid(row=1, column=0, padx=5, columnspan=2)
