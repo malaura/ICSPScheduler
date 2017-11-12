@@ -1,12 +1,15 @@
 '''
 Back End
 '''
+import os
+
+from code.Student import Student
+
 
 def load_csv_files_in_directory(directory):
     '''
     Loads all of the csv files in a current directory.
-    For each file it validates if the file is in the correct format. For those in the correct format
-    it creates a student object.
+    Calls student object
 
     :param directory: os directory
     :return: dictionary - key is string name, value is student objects (that were loaded successfully)
@@ -14,20 +17,25 @@ def load_csv_files_in_directory(directory):
     ex.
         [[MariaRodriguez.csv, 'Date wasn't in the correct format'], [Jim.csv, 'Munday is not a day of the week']]
     '''
-    return
+    list_name = os.listdir(directory)
+    dictionary = {}
+    list_of_wrong_name = []
+    for name in list_name:
+        directory_of_one_student = os.path.join('Students', name)
+        print(directory_of_one_student)
+        student_name = name[:3]
+        print('ready')
+        student = Student(directory_of_one_student)
+        # print(dictionary[student_name.load())
+        if student.get_validation():
+            dictionary[student_name] = student
+        else:
+            list_of_wrong_name.append(name)
 
-def csv_file_format_validator(filename):
-    '''
-    Validates if csv file is in the correct standard format.
-
-    :param filename: csv filename with a student's schedule
-    :return: boolean - true if the file is in the successful format, false if otherwise
-             list - first index file name, second index is string that specifies the first error it encountered
-
-    ex.
-        False, [MariaRodriguez.csv, 'Date wasn't in the correct format']
-    '''
-    return
+    if len(list_of_wrong_name) != 0:
+        return list_of_wrong_name
+    else:
+        return dictionary
 
 def update_csv_file(filename):
     '''
@@ -105,6 +113,7 @@ def create_student(filename = None):
         True, <student object>
         False, 'MariaRodriguez.csv is already in the directory'
     '''
+    student = Student(filename)
     return
 
 def update_student(filename, student):
@@ -149,8 +158,8 @@ def create_calendar(filename):
                         value is interval tree object.
              dictionary: Monday, Tuesday, Wednesday ... keys
     '''
-    return
 
+    return
 
 '''
 MainCalendar Class
@@ -188,3 +197,7 @@ def find_available_students(students, startTime, endTime, bufferStart, bufferEnd
 
 
 def set_student_to_request():
+
+    return
+
+load_csv_files_in_directory('Students')
