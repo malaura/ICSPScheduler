@@ -12,6 +12,7 @@ class Prompt():
 
     def createPrompt(self):
         self.prompt = Toplevel(self.parent.root)
+        self.prompt.attributes("-topmost", True)
         self.prompt.minsize(width=225, height=75)
         self.prompt.maxsize(width=225, height=75)
         self.prompt.title(self.title)
