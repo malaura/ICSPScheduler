@@ -98,7 +98,7 @@ class MainWindow():
     def createNewPrompt(self):
         self.prompt = Toplevel(self.root)
         self.prompt.title("Create New Request")
-
+        self.prompt.configure(background = "gray90")
         appHighlightFont = font.Font(family='Helvetica', size=18, weight='bold')
         titleLabel = ttk.Label(self.prompt, text="New Request", font=appHighlightFont)
         titleLabel.grid(row=0, column=0, columnspan=2, sticky="W", pady=10, padx=10)
