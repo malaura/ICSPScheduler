@@ -1,14 +1,13 @@
-'''
-Back End
-'''
+import csv
 import os
+import shutil
 
 from code.Student import Student
 
 
 def load_csv_files_in_directory(directory):
-    '''
-    Loads all of the csv files in a current directory.
+    """
+    Loads all of the csv files in a current directory. The default directory is Students
     Calls student object
 
     :param directory: os directory
@@ -16,7 +15,7 @@ def load_csv_files_in_directory(directory):
              list of lists - file names that were not loaded successfully
     ex.
         [[MariaRodriguez.csv, 'Date wasn't in the correct format'], [Jim.csv, 'Munday is not a day of the week']]
-    '''
+    """
     list_name = os.listdir(directory)
     dictionary = {}
     list_of_wrong_name = []
@@ -24,21 +23,21 @@ def load_csv_files_in_directory(directory):
         directory_of_one_student = os.path.join('Students', name)
         print(directory_of_one_student)
         student_name = name[:3]
-        print('ready')
         student = Student(directory_of_one_student)
-        # print(dictionary[student_name.load())
         if student.get_validation():
             dictionary[student_name] = student
         else:
             list_of_wrong_name.append(name)
+            list_of_wrong_name.append(student.get_validation_info())
 
     if len(list_of_wrong_name) != 0:
         return list_of_wrong_name
     else:
         return dictionary
 
+
 def update_csv_file(filename):
-    '''
+    """
     Updates a csv file in the directory
 
     :param filename: string with the file name
@@ -47,13 +46,18 @@ def update_csv_file(filename):
 
     ex.
         False, 'file MariaRodriguez.csv not found in the directory'
-        True, ''
-    '''
-    return
+        True, 'update succeeded'
+    """
+    directory_of_one_student = os.path.join('Students', filename)
+    if os.system('open ./%s' % directory_of_one_student) != 0:
+        return False, 'file %s not found in the directory' % filename
+    else:
+        return True, 'update succeeded'
 
-#Add button
+
+# Add button
 def add_csv_file_to_directory(filename):
-    '''
+    """
     Creates a csv file schedule in the directory for a new student
 
     :param filename: string with the file name
@@ -63,28 +67,45 @@ def add_csv_file_to_directory(filename):
     ex.
         True, 'MariaRodriguez.csv'
         False, 'MariaRodriguez.csv is already in the directory'
-    '''
-    return
+    """
+    directory_of_one_student = os.path.join('Students', filename)
+    if os.path.exists(directory_of_one_student):
+        return False, '%s is already in the directory' % filename
+    else:
+        with open(directory_of_one_student, 'w') as new_file:
+            fieldnames = ['Date', 'Start', 'End', 'Information']
+            csv_writer = csv.DictWriter(new_file, fieldnames=fieldnames, delimiter=',')
+            csv_writer.writeheader()
+    return True, '%s has been added' % filename
 
-#Don't want to do this right now
-def rename_csv_file(originalName, newName):
-    '''
+
+# Don't want to do this right now
+def rename_csv_file(original_name, new_name):
+    """
     Replaces csv file name with originalName with newName
 
-    :param originalName: original file name in the directory
-    :param newName:  new file name in the directory
+    :param original_name: original file name in the directory
+    :param new_name:  new file name in the directory
     :return: boolean: true if it was successful, false if it wasn't
              string: if boolean is true, string corresponding to new csv file name, if false error encountered
 
     ex.
         True, 'MariaMoreno.csv'
         False, 'MariaRodriguez.csv is not in the directory'
-    '''
-    return
+    """
+    directory_of_new_name = os.path.join('Students', new_name)
+    directory_of_original_name = os.path.join('Students', original_name)
+    if os.path.exists(directory_of_new_name):
+        return False, '%s is already in the directory' % new_name
+    if not os.path.exists(directory_of_original_name):
+        return False, '%s is not in the directory' % directory_of_original_name
+    shutil.move(directory_of_original_name, directory_of_new_name)
+    os.remove(directory_of_original_name)
+    return True, '%s is created' % new_name
 
 
-def delete_csv_file(fileName):
-    '''
+def delete_csv_file(file_name):
+    """
     Delete csv file schedule in the directory
 
     :param filename: string with the file name
@@ -94,17 +115,23 @@ def delete_csv_file(fileName):
     ex.
         True, ''
         False, 'MariaRodriguez.csv is not in the directory'
-    '''
-    return
+    """
+    directory_of_file_name = os.path.join('Students', file_name)
+    if os.path.exists(directory_of_file_name):
+        os.remove(directory_of_file_name)
+        return True, 'Delete succeed'
+    else:
+        return False, '%s is not in the directory'% file_name
 
-def create_student(filename = None):
-    '''
+
+def create_student(file_name=None):
+    """
     Creates a student object. Validates if all of the data is correct if passed in a file name.
     # import csv file
     # Calls on csv_file_format_validator to validate filename
     # Calls on create_calendar to create calendar for the student
 
-    :param filename: csv file name of student's schedule
+    :param file_name: csv file name of student's schedule
     :return:   boolean: true if it was successful, false if it wasn't
                student object: student object creating
                string: what is the error occurred
@@ -112,12 +139,18 @@ def create_student(filename = None):
     ex.
         True, <student object>
         False, 'MariaRodriguez.csv is already in the directory'
-    '''
-    student = Student(filename)
-    return
+    """
+    list_name = os.listdir('Students')
+    for name in list_name:
+        if file_name == name:
+            return False, '%s is already in the directory' % file_name
+    directory_of_the_student = os.path.join('Students', file_name)
+    student = Student(directory_of_the_student)
+    return True, student
 
-def update_student(filename, student):
-    '''
+
+def update_student(file_name, student):
+    """
     Updates a student object. Validates if all of the data is correct if passed in a file name.
 
     # Calls on create_calendar to create calendar for the student
@@ -130,11 +163,18 @@ def update_student(filename, student):
     ex.
         True, <student object>
         False, 'MariaRodriguez.csv is already in the directory'
-    '''
-    return
+    """
+    list_name = os.listdir('Students')
+    for name in list_name:
+        if file_name == name:
+            return False, '%s is already in the directory' % file_name
+    directory_of_file_name = os.path.join('Students', file_name)
+    student = Student(directory_of_file_name)
+    return True, student
+
 
 def delete_student(student):
-    '''
+    """
     Deletes a student object. Validates if all of the data is correct if passed in a file name.
 
     # Calls on delete_csv_file
@@ -144,22 +184,35 @@ def delete_student(student):
              optional string: if false, returns the error encountered
 
     ex.
-        True
+        True, 'delete succeed'
         False, 'MariaRodriguez.csv is not in the directory'
-    '''
-    return
+    """
+    directory_of_file_name = student.get_directory()
+    if os.path.exists(directory_of_file_name):
+        os.remove(directory_of_file_name)
+        name = student.get_student_name()
+        del student
+        return True, '%s delete succeed'%name
+    else:
+        return False, '%s is not in the directory'%student.get_directory()
 
-def create_calendar(filename):
-    '''
+
+
+def create_calendar(student):
+    """
     Takes in a csv file that is already in the correct format, and returns a dictionary that represents a calendar.
 
-    :param filename: csv filename with schedule
+    :param student: student object
     :return: dictionary: The key is a date
                         value is interval tree object.
              dictionary: Monday, Tuesday, Wednesday ... keys
-    '''
-
+    """
+    dictionary_of_student = student.get_dictionary() # like {'Sunday': ['12:00','1:00','lunch time']}
+    dictionary_of_calendar = {}
+    for key in dictionary_of_student:
+        dictionary_of_calendar[key] ######################################
     return
+
 
 '''
 MainCalendar Class
@@ -171,10 +224,8 @@ Calendar: dictionary containing a calendar schedule
 '''
 
 
-
-
 def load_all_student():
-    '''
+    """
     Loads all of the students from a directory
 
     # Calls on:
@@ -182,10 +233,11 @@ def load_all_student():
     #create_student
 
     :return:
-    '''
+    """
+
 
 def find_available_students(students, startTime, endTime, bufferStart, bufferEnd):
-    '''
+    """
 
     :param students:
     :param startTime:
@@ -193,11 +245,13 @@ def find_available_students(students, startTime, endTime, bufferStart, bufferEnd
     :param bufferStart:
     :param bufferEnd:
     :return:
-    '''
+    """
 
 
 def set_student_to_request():
-
     return
 
-load_csv_files_in_directory('Students')
+
+# load_csv_files_in_directory('Students')
+add_csv_file_to_directory('ABC.csv')
+add_csv_file_to_directory('Jim.csv')
