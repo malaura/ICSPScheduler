@@ -1,6 +1,7 @@
 import csv
 import os
 import shutil
+from intervaltree import IntervalTree
 
 from code.Student import Student
 
@@ -21,7 +22,6 @@ def load_csv_files_in_directory(directory):
     list_of_wrong_name = []
     for name in list_name:
         directory_of_one_student = os.path.join('Students', name)
-        print(directory_of_one_student)
         student_name = name[:3]
         student = Student(directory_of_one_student)
         if student.get_validation():
@@ -121,7 +121,7 @@ def delete_csv_file(file_name):
         os.remove(directory_of_file_name)
         return True, 'Delete succeed'
     else:
-        return False, '%s is not in the directory'% file_name
+        return False, '%s is not in the directory' % file_name
 
 
 def create_student(file_name=None):
@@ -192,10 +192,9 @@ def delete_student(student):
         os.remove(directory_of_file_name)
         name = student.get_student_name()
         del student
-        return True, '%s delete succeed'%name
+        return True, '%s delete succeed' % name
     else:
-        return False, '%s is not in the directory'%student.get_directory()
-
+        return False, '%s is not in the directory' % student.get_directory()
 
 
 def create_calendar(student):
@@ -207,11 +206,8 @@ def create_calendar(student):
                         value is interval tree object.
              dictionary: Monday, Tuesday, Wednesday ... keys
     """
-    dictionary_of_student = student.get_dictionary() # like {'Sunday': ['12:00','1:00','lunch time']}
-    dictionary_of_calendar = {}
-    for key in dictionary_of_student:
-        dictionary_of_calendar[key] ######################################
-    return
+
+    return student.get_dictionary_of_time_interval()
 
 
 '''
@@ -234,24 +230,53 @@ def load_all_student():
 
     :return:
     """
+    students = load_csv_files_in_directory('Students')
+    students['Jim'].get_dictionary_of_schedule()  # to get students' schedule list
+    students['Jim'].get_dictionary_of_time_interval()  # to get students' time interval object
 
 
-def find_available_students(students, startTime, endTime, bufferStart, bufferEnd):
+def find_available_students(students, date, start_time, end_time, buffer_start, buffer_end):
     """
-
-    :param students:
-    :param startTime:
-    :param endTime:
-    :param bufferStart:
-    :param bufferEnd:
-    :return:
+    find the available student for a specific time
+    :param students: dictionary that contains all the students
+    :param date: the date when the request occurs
+    :param start_time: request's starting time e.g. 12:00
+    :param end_time: request's starting time e.g. 12:00
+    :param buffer_start: buffer time for start time e.g. 00:10
+    :param buffer_end: buffer time for end time e,g, 00:05
+    :return: list of all available students
     """
+    lis = []
+    minute = int(start_time.split(':')[1]) + int(buffer_start.split(':')[1])
+    if minute > 60:
+        minute -= 60
+        hour = int(start_time.split(':')[0]) + int(buffer_start.split(':')[0]) + 1
+    else:
+        hour = int(start_time.split(':')[0]) + int(buffer_start.split(':')[0])
+    actual_start_time = float('%s.%s'% hour, minute)
+    minute = int(end_time.split(':')[1]) + int(buffer_end.split(':')[1])
+    if minute > 60:
+        minute -= 60
+        hour = int(end_time.split(':')[0]) + int(buffer_end.split(':')[0]) + 1
+    else:
+        hour = int(end_time.split(':')[0]) + int(buffer_end.split(':')[0])
+    actual_end_time = float('%s.%s' % hour, minute)
+    for student in students.keys():
+        interval = students[student].get_dictionary_of_time_interval()[date]
+        if interval[actual_start_time:actual_end_time] == set():
+            lis.append(student)
 
+    return lis
 
 def set_student_to_request():
     return
 
 
 # load_csv_files_in_directory('Students')
-add_csv_file_to_directory('ABC.csv')
-add_csv_file_to_directory('Jim.csv')
+# add_csv_file_to_directory('ABC.csv')
+# add_csv_file_to_directory('Jim.csv')
+# create_calendar()
+dic = load_csv_files_in_directory('Students')
+for i in dic:
+    print(dic[i].get_dictionary_of_schedule())
+    print(dic[i].get_dictionary_of_time_interval()['Monday'])

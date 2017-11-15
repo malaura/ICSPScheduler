@@ -3,12 +3,14 @@ import os
 import shutil
 from datetime import datetime
 
+from intervaltree import IntervalTree, Interval
 
 class Student:
     def __init__(self, directory):
         self.directory = directory
-        self.dictionary = {}
-        self.name = directory.split('/')[1].split('.')[0]
+        self.dictionary_of_schedule = {}
+        self.dictionary_of_time_interval = {}
+        self.name = os.path.split(directory)[1].split('.')[0]
         self.validation, self.validation_info = self.csv_file_format_validator()
         self.fieldnames = ['Date', 'Start', 'End', 'Information']
         self.csv_file_format_validator()
@@ -23,10 +25,22 @@ class Student:
         with open(self.directory, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
             for line in csv_reader:
-                self.dictionary['%s' % line['Date']] = []
-                self.dictionary['%s' % line['Date']].append(line['Start'])
-                self.dictionary['%s' % line['Date']].append(line['End'])
-                self.dictionary['%s' % line['Date']].append(line['Information'])
+                lis = []
+                lis.append(line['Start'])
+                lis.append(line['End'])
+                lis.append(line['Information'])
+                try:
+                    self.dictionary_of_schedule['%s' % line['Date']].append(lis)
+                except:
+                    self.dictionary_of_schedule['%s' % line['Date']] = []
+                    self.dictionary_of_schedule['%s' % line['Date']].append(lis)
+
+        for key in self.dictionary_of_schedule:
+            self.dictionary_of_time_interval[key] = IntervalTree()
+            for event in self.dictionary_of_schedule[key]:
+                start = float(event[0].replace(':', '.'))
+                end = float(event[1].replace(':', '.'))
+                self.dictionary_of_time_interval[key][start:end] = True
 
     def get_directory(self):
         return self.directory
@@ -37,8 +51,11 @@ class Student:
     def get_validation(self):
         return self.validation
 
-    def get_dictionary(self):
-        return self.dictionary
+    def get_dictionary_of_schedule(self):
+        return self.dictionary_of_schedule
+
+    def get_dictionary_of_time_interval(self):
+        return self.dictionary_of_time_interval
 
     def get_student_name(self):
         return self.name
@@ -78,6 +95,14 @@ class Student:
                 csv_writer.writerow(request)
 
         shutil.move(os.path.join('Students', 'temp.csv'), self.directory)
+        # dictionary_of_schedule
+        lis = []
+        lis.append(start)
+        lis.append(end)
+        lis.append(info)
+        self.dictionary_of_schedule[date].append(lis)
+        # dictionary_of_time_interval
+        self.dictionary_of_time_interval[date][float(start.replace(':','.')):float(end.replace(':','.'))] = True
 
     def delete_request(self, date, start, end, info):
         """
@@ -99,6 +124,13 @@ class Student:
                         csv_writer.writerow(line)
 
         shutil.move(os.path.join('Students', 'temp.csv'), self.directory)
+
+
+        # dictionary_of_schedule
+        self.dictionary_of_schedule[date].remove([start, end, info])
+        # dictionary_of_time_interval
+        self.dictionary_of_time_interval[date].remove(
+            Interval(float(start.replace(':', '.')), float(end.replace(':', '.')), True))
 
     def csv_file_format_validator(self):
         """
