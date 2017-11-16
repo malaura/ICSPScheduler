@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import font
 from .Prompt import Prompt
+from ..stubFunctions import *
 import calendar
 
 
@@ -201,3 +202,4 @@ class MainWindow():
                 curButton.configure(text=str(self.currentMonth)+"/"+str(day)+"\n")
             index += 1
         self.monthLabel.configure(text=self.months[self.currentMonth-1])
+

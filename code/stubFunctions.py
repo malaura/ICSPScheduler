@@ -2,7 +2,6 @@ import csv
 import os
 import shutil
 from intervaltree import IntervalTree
-
 from code.Student import Student
 
 
@@ -268,7 +267,19 @@ def find_available_students(students, date, start_time, end_time, buffer_start, 
 
     return lis
 
-def set_student_to_request():
+
+def set_student_to_request(student, date, start_time, end_time, buffer_start, buffer_end):
+    """
+
+    :param student: the student who is going to have the request
+    :param date: request's date
+    :param start_time: request's start time
+    :param end_time: request's end time
+    :param buffer_start: request's buffer start
+    :param buffer_end: request's date
+    :return:
+    """
+
     return
 
 
@@ -276,7 +287,7 @@ def set_student_to_request():
 # add_csv_file_to_directory('ABC.csv')
 # add_csv_file_to_directory('Jim.csv')
 # create_calendar()
-dic = load_csv_files_in_directory('Students')
-for i in dic:
-    print(dic[i].get_dictionary_of_schedule())
-    print(dic[i].get_dictionary_of_time_interval()['Monday'])
+#dic = load_csv_files_in_directory('Students')
+#for i in dic:
+#    print(dic[i].get_dictionary_of_schedule())
+#    print(dic[i].get_dictionary_of_time_interval()['Monday'])
