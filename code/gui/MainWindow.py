@@ -16,6 +16,7 @@ class MainWindow():
         self.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
                                 'September', 'October', 'November', 'December']
         self.currentMonth = 12
+        self.currentYear = 2017
         self.calendar = calendar.Calendar(firstweekday=6)
         self.buttons = []
 
@@ -78,7 +79,7 @@ class MainWindow():
                 count += 1
 
         index = 0
-        for day in self.calendar.itermonthdays(2017, self.currentMonth):
+        for day in self.calendar.itermonthdays(self.currentYear, self.currentMonth):
             curButton = self.buttons[index]
             if day == 0:
                 curButton.configure(text=" "+"\n")
@@ -177,6 +178,7 @@ class MainWindow():
     def nextMonth(self):
         if self.currentMonth == 12:
             self.currentMonth = 1
+            self.currentYear += 1
         else:
             self.currentMonth += 1
         self.updateCalendar()
@@ -184,13 +186,14 @@ class MainWindow():
     def prevMonth(self):
         if self.currentMonth == 1:
             self.currentMonth = 12
+            self.currentYear -=1
         else:
             self.currentMonth -= 1
         self.updateCalendar()
 
     def updateCalendar(self):
         index = 0
-        for day in self.calendar.itermonthdays(2017, self.currentMonth):
+        for day in self.calendar.itermonthdays(self.currentYear, self.currentMonth):
             curButton = self.buttons[index]
             if day == 0:
                 curButton.configure(text=" "+"\n")
