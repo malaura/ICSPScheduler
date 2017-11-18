@@ -2,6 +2,8 @@ import csv
 import os
 import shutil
 from intervaltree import IntervalTree
+
+from code.Requests import Requests
 from code.Student import Student
 
 
@@ -227,67 +229,58 @@ def load_all_student():
     #load_csv_file
     #create_student
 
-    :return:
+    :return: dictionary of students
     """
     students = load_csv_files_in_directory('Students')
-    students['Jim'].get_dictionary_of_schedule()  # to get students' schedule list
-    students['Jim'].get_dictionary_of_time_interval()  # to get students' time interval object
+    # students['Jim'].get_dictionary_of_schedule()  # to get students' schedule list
+    # students['Jim'].get_dictionary_of_time_interval()  # to get students' time interval object
+    return students
 
 
-def find_available_students(students, date, start_time, end_time, buffer_start, buffer_end):
+def find_available_students(students, request):
     """
     find the available student for a specific time
+    :param request: object request
     :param students: dictionary that contains all the students
-    :param date: the date when the request occurs
-    :param start_time: request's starting time e.g. 12:00
-    :param end_time: request's starting time e.g. 12:00
-    :param buffer_start: buffer time for start time e.g. 00:10
-    :param buffer_end: buffer time for end time e,g, 00:05
     :return: list of all available students
     """
     lis = []
-    minute = int(start_time.split(':')[1]) + int(buffer_start.split(':')[1])
-    if minute > 60:
-        minute -= 60
-        hour = int(start_time.split(':')[0]) + int(buffer_start.split(':')[0]) + 1
-    else:
-        hour = int(start_time.split(':')[0]) + int(buffer_start.split(':')[0])
-    actual_start_time = float('%s.%s'% hour, minute)
-    minute = int(end_time.split(':')[1]) + int(buffer_end.split(':')[1])
-    if minute > 60:
-        minute -= 60
-        hour = int(end_time.split(':')[0]) + int(buffer_end.split(':')[0]) + 1
-    else:
-        hour = int(end_time.split(':')[0]) + int(buffer_end.split(':')[0])
-    actual_end_time = float('%s.%s' % hour, minute)
+
     for student in students.keys():
-        interval = students[student].get_dictionary_of_time_interval()[date]
-        if interval[actual_start_time:actual_end_time] == set():
+        interval = students[student].get_dictionary_of_time_interval()[request.get_date()]
+        if interval[request.get_actual_start_time():request.get_actual_end_time()] == set():
             lis.append(student)
 
     return lis
 
 
-def set_student_to_request(student, date, start_time, end_time, buffer_start, buffer_end):
+def set_student_to_request(student, request):
     """
 
+    :param request: object request
     :param student: the student who is going to have the request
-    :param date: request's date
-    :param start_time: request's start time
-    :param end_time: request's end time
-    :param buffer_start: request's buffer start
-    :param buffer_end: request's date
-    :return:
+    :return: None
     """
 
+    student.add_request(request)
     return
 
+def delete_request_from_student(student, request):
+    """
 
-# load_csv_files_in_directory('Students')
-# add_csv_file_to_directory('ABC.csv')
-# add_csv_file_to_directory('Jim.csv')
-# create_calendar()
-#dic = load_csv_files_in_directory('Students')
-#for i in dic:
-#    print(dic[i].get_dictionary_of_schedule())
-#    print(dic[i].get_dictionary_of_time_interval()['Monday'])
+    :param request: object request
+    :param student: the student who is going to have the request
+    :return: None
+    """
+
+    student.delete_request(request)
+
+def load_all_requests():
+    """
+
+    :return: dictionary of requests
+    """
+
+    requests = Requests()
+    return requests.get_dictionary()
+
