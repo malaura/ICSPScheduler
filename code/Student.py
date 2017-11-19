@@ -5,6 +5,7 @@ from datetime import datetime
 
 from intervaltree import IntervalTree, Interval
 
+
 class Student:
     def __init__(self, directory):
         self.directory = directory
@@ -25,10 +26,7 @@ class Student:
         with open(self.directory, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
             for line in csv_reader:
-                lis = []
-                lis.append(line['Start'])
-                lis.append(line['End'])
-                lis.append(line['Information'])
+                lis = [line['Start'], line['End'], line['Information']]
                 try:
                     self.dictionary_of_schedule['%s' % line['Date']].append(lis)
                 except:
@@ -74,13 +72,10 @@ class Student:
         """
         os.remove(self.directory)
 
-    def add_request(self, date, start, end, info):
+    def add_request(self, request):
         """
         add a request to Student's calendar
-        :param date: request's date
-        :param start: request's date
-        :param end: request's date
-        :param info: request's date
+        :param request: request object
         :return: None
         """
 
@@ -91,26 +86,26 @@ class Student:
                 csv_writer.writeheader()
                 for line in csv_reader:
                     csv_writer.writerow(line)
-                request = {'Information': info, 'Start': start, 'End': end, 'Date': date}
+                request = {'Information': request.get_name(), 'Start': request.get_start_time(),
+                           'End': request.get_end_time(), 'Date': request.get_date()}
                 csv_writer.writerow(request)
 
         shutil.move(os.path.join('Students', 'temp.csv'), self.directory)
         # dictionary_of_schedule
-        lis = []
-        lis.append(start)
-        lis.append(end)
-        lis.append(info)
-        self.dictionary_of_schedule[date].append(lis)
-        # dictionary_of_time_interval
-        self.dictionary_of_time_interval[date][float(start.replace(':','.')):float(end.replace(':','.'))] = True
+        lis = [request.get_start_time(), request.get_end_time(), request.get_name()]
+        try:
+            self.dictionary_of_schedule[request.get_date()].append(lis)
+        except:
+            self.dictionary_of_schedule[request.get_date()] = []
+            self.dictionary_of_schedule[request.get_date()].append(lis)
 
-    def delete_request(self, date, start, end, info):
+        # dictionary_of_time_interval
+        self.dictionary_of_time_interval[request.get_date()][float(request.get_start_time().replace(':','.')):float(request.get_end_time().replace(':','.'))] = True
+
+    def delete_request(self, request):
         """
         delete the request from the calendar
-        :param date: request's date
-        :param start: request's date
-        :param end: request's date
-        :param info: request's date
+        :param request: request object
         :return: None
         """
         with open(self.directory, 'r') as csv_file:
@@ -118,19 +113,23 @@ class Student:
             with open(os.path.join('Students', 'temp.csv'), 'w') as new_file:
                 csv_writer = csv.DictWriter(new_file, fieldnames=self.fieldnames, delimiter=',')
                 csv_writer.writeheader()
-                request = {'Information': info, 'Start': start, 'End': end, 'Date': date}
+                request = {'Information': request.get_name(), 'Start': request.get_start_time(),
+                           'End': request.get_end_time(), 'Date': request.get_date()}
                 for line in csv_reader:
                     if line != request:
                         csv_writer.writerow(line)
 
         shutil.move(os.path.join('Students', 'temp.csv'), self.directory)
 
-
         # dictionary_of_schedule
-        self.dictionary_of_schedule[date].remove([start, end, info])
+        self.dictionary_of_schedule[request.get_date()].remove([request.get_start_time(), request.get_end_time(), request.get_name()])
+        if self.dictionary_of_schedule[request.get_date()] == []:
+            del self.dictionary_of_schedule[request.get_date()]
         # dictionary_of_time_interval
-        self.dictionary_of_time_interval[date].remove(
-            Interval(float(start.replace(':', '.')), float(end.replace(':', '.')), True))
+        self.dictionary_of_time_interval[request.get_date()].remove(
+            Interval(float(request.get_start_time().replace(':', '.')), float(request.get_end_time().replace(':', '.')), True))
+        if self.dictionary_of_time_interval[request.get_date()] == IntervalTree():
+            del self.dictionary_of_time_interval[request.get_date()]
 
     def csv_file_format_validator(self):
         """
@@ -192,3 +191,4 @@ class Student:
         except:
             return False
         return True
+
