@@ -21,6 +21,8 @@ class MainWindow():
         self.calendar = calendar.Calendar(firstweekday=6)
         self.buttons = []
 
+        self.students = load_all_student()
+
         self.initializeUI()
         #self.prompt = Prompt(self, "test", "hello word")
 
@@ -53,8 +55,8 @@ class MainWindow():
 
 
         # Initalize central frame widgets
-        appHighlightFont = font.Font(family='Helvetica', size=18, weight='bold')
-        self.monthLabel = Label(self.centralFrame, text=self.months[self.currentMonth-1], font=appHighlightFont, background="gray90")
+        appHighlightFont = font.Font(family='Helvetica', size=14, weight='bold')
+        self.monthLabel = Label(self.centralFrame, text=self.months[self.currentMonth-1]+ " " + str(self.currentYear), font=appHighlightFont, background="gray90")
         self.monthLabel.grid(column=0, row=0, columnspan=2)
         leftButton = ttk.Button(self.centralFrame, text="<", width=5, command=self.prevMonth)
         leftButton.grid(column=4, row=8, sticky=E, pady=5)
@@ -91,6 +93,10 @@ class MainWindow():
         studentLabel = Label(self.rightFrame, text="Students", background="gray90")
         studentLabel.grid(row=0, column=0, columnspan=2)
         studentView = Listbox(self.rightFrame, height=17, width=20)
+        for student in self.students:
+            studentView.insert(END, student)
+            print(self.students[student].get_dictionary_of_schedule())
+
         studentView.grid(row=1, column=0, padx=5, columnspan=2)
         addButton = ttk.Button(self.rightFrame, text="+", width=5)
         addButton.grid(row=2, column=0, sticky=E)
@@ -120,22 +126,28 @@ class MainWindow():
         bufferEnd.grid(row=7, column=0, sticky="e")
 
         nameInput = ttk.Entry(self.prompt, width=20)
-        nameInput.grid(row=1, column=1, columnspan=3, padx=10)
+        nameInput.grid(row=1, column=1, columnspan=2, padx=10)
         monthInput = ttk.Combobox(self.prompt, width=17, state="readonly")
         monthInput['values'] = ('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
                                 'September', 'October', 'November', 'December')
-        monthInput.grid(row=2, column=1, columnspan=3, padx=10)
+        monthInput.grid(row=2, column=1, columnspan=2, padx=10)
         dayInput = ttk.Combobox(self.prompt, width=17, state="readonly")
         days = []
         for i in range(1, 32):
             days.append(i)
         dayInput['values'] = days
-        dayInput.grid(row=3, column=1, columnspan=3, padx=10)
+        dayInput.grid(row=3, column=1, columnspan=2, padx=10)
         startHourInput = ttk.Combobox(self.prompt, width=3, state="readonly")
         startHourInput.grid(row=4, column=1, sticky="E", padx=(10,0))
-        startHourInput['values'] = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+        hours = []
+        for i in range(23):
+            if i < 10:
+                hours.append('0'+str(i))
+            else:
+                hours.append(i)
+        startHourInput['values'] = hours
         startMinuteInput = ttk.Combobox(self.prompt, width=5, state="readonly")
-        startMinuteInput.grid(row=4, column=2, sticky="WE")
+        startMinuteInput.grid(row=4, column=2, sticky="W")
         times = []
         for i in range(0, 60, 5):
             if i < 10:
@@ -143,38 +155,42 @@ class MainWindow():
             else:
                 times.append(str(i))
         startMinuteInput['values'] = times
-        startTimeInput = ttk.Combobox(self.prompt, width=3, state="readonly")
-        startTimeInput.grid(row=4, column=3, padx=(0,10), sticky="W")
-        startTimeInput['values'] = ("AM", "PM")
+        #startTimeInput = ttk.Combobox(self.prompt, width=3, state="readonly")
+        #startTimeInput.grid(row=4, column=3, padx=(0,10), sticky="W")
+        #startTimeInput['values'] = ("AM", "PM")
         endHourInput = ttk.Combobox(self.prompt, width=3, state="readonly")
-        endHourInput.grid(row=5, column=1, sticky="E", padx=(10,0))
+        endHourInput.grid(row=5, column=1, sticky="EW", padx=(0,0))
         endHourInput['values'] = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
-        endMinuteInput = ttk.Combobox(self.prompt, width=5, state="readonly")
-        endMinuteInput.grid(row=5, column=2, sticky="WE")
+        endMinuteInput = ttk.Combobox(self.prompt, width=3, state="readonly")
+        endMinuteInput.grid(row=5, column=2, sticky="EW")
         endMinuteInput['values'] = times
-        endTimeInput = ttk.Combobox(self.prompt, width=3, state="readonly")
-        endTimeInput.grid(row=5, column=3, padx=(0,10), sticky="W")
-        endTimeInput['values'] = ("AM", "PM")
+        #endTimeInput = ttk.Combobox(self.prompt, width=3, state="readonly")
+        #endTimeInput.grid(row=5, column=3, padx=(0,10), sticky="W")
+        #endTimeInput['values'] = ("AM", "PM")
         bufferStartInput = ttk.Combobox(self.prompt, width=17, state="readonly")
-        bufferStartInput.grid(row=6, column=1, columnspan=3, padx=10)
+        bufferStartInput.grid(row=6, column=1, columnspan=2, padx=10)
         bufferList = []
         for i in range(0, 65, 5):
             bufferList.append(i)
         bufferStartInput['values'] = bufferList
         bufferEndInput = ttk.Combobox(self.prompt, width=17, state="readonly")
-        bufferEndInput.grid(row=7, column=1, columnspan=3, padx=10)
+        bufferEndInput.grid(row=7, column=1, columnspan=2, padx=10)
         bufferEndInput['values'] = bufferList
+        assignedLabel = ttk.Label(self.prompt, text="Assigned")
+        assignedLabel.grid(row=8, column=0, pady=5)
         assignedView = Listbox(self.prompt, width=20, height=10)
-        assignedView.grid(row=8, column=0, padx=5, pady=5, sticky="W")
+        assignedView.grid(row=9, column=0, padx=(5,0), pady=5, sticky="W")
+        availableLabel = ttk.Label(self.prompt, text="Available Students")
+        availableLabel.grid(row=8, column=1, pady=(5,0))
         availableView = Listbox(self.prompt, width=20, height=10)
-        availableView.grid(row=8, column=1, columnspan=3, padx=5, pady=5, sticky="E")
+        availableView.grid(row=9, column=1, columnspan=2, padx=5, pady=5, sticky="E")
 
         cancelButton = ttk.Button(self.prompt, text="Cancel", command=self.prompt.destroy)
-        cancelButton.grid(row=10, column=0, sticky="W", padx=5, pady=(0,5))
+        cancelButton.grid(row=11, column=0, sticky="W", padx=5, pady=(0,5))
         searchButton = ttk.Button(self.prompt, text="Search")
-        searchButton.grid(row=9, column=1, sticky="E", columnspan=3, padx=5)
+        searchButton.grid(row=10, column=1, sticky="E", columnspan=2, padx=5)
         confirmButton = ttk.Button(self.prompt, text="Confirm")
-        confirmButton.grid(row=10, column=1, sticky="E", columnspan=3, padx=5, pady=(0,5))
+        confirmButton.grid(row=11, column=1, sticky="E", columnspan=2, padx=5, pady=(0,5))
 
     def nextMonth(self):
         if self.currentMonth == 12:
@@ -194,6 +210,9 @@ class MainWindow():
 
     def updateCalendar(self):
         index = 0
+        for button in self.buttons:
+            button.config(text=" "+"\n")
+
         for day in self.calendar.itermonthdays(self.currentYear, self.currentMonth):
             curButton = self.buttons[index]
             if day == 0:
@@ -201,5 +220,4 @@ class MainWindow():
             else:
                 curButton.configure(text=str(self.currentMonth)+"/"+str(day)+"\n")
             index += 1
-        self.monthLabel.configure(text=self.months[self.currentMonth-1])
-
+        self.monthLabel.configure(text=self.months[self.currentMonth-1]+" "+str(self.currentYear))
