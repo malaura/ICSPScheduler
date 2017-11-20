@@ -1,7 +1,10 @@
+import calendar
 import csv
 import os
 import shutil
+
 from intervaltree import IntervalTree
+import datetime
 
 from code.Requests import Requests
 from code.Student import Student
@@ -245,11 +248,27 @@ def find_available_students(students, request):
     :return: list of all available students
     """
     lis = []
-
+    date = request.get_date()
+    mon, day, year = request.get_date().split('/')
+    weekly_date = calendar.day_name[datetime.datetime(int(year), int(mon), int(day)).weekday()]
+    print(weekly_date)
     for student in students.keys():
-        interval = students[student].get_dictionary_of_time_interval()[request.get_date()]
-        if interval[request.get_actual_start_time():request.get_actual_end_time()] == set():
-            lis.append(student)
+        if date in students[student].get_dictionary_of_time_interval():
+            interval = students[student].get_dictionary_of_time_interval()[date]
+            if interval[request.get_actual_start_time():request.get_actual_end_time()] == set():
+                if weekly_date in students[student].get_dictionary_of_time_interval():
+                    interval = students[student].get_dictionary_of_time_interval()[weekly_date]
+                    if interval[request.get_actual_start_time():request.get_actual_end_time()] == set():
+                        lis.append(student)
+                else:
+                    lis.append(student)
+        else:
+            if weekly_date in students[student].get_dictionary_of_time_interval():
+                interval = students[student].get_dictionary_of_time_interval()[weekly_date]
+                if interval[request.get_actual_start_time():request.get_actual_end_time()] == set():
+                    lis.append(student)
+            else:
+                lis.append(student)
 
     return lis
 
