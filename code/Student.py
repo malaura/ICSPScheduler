@@ -86,9 +86,9 @@ class Student:
                 csv_writer.writeheader()
                 for line in csv_reader:
                     csv_writer.writerow(line)
-                request = {'Information': request.get_name(), 'Start': request.get_start_time(),
+                requests = {'Information': request.get_name(), 'Start': request.get_start_time(),
                            'End': request.get_end_time(), 'Date': request.get_date()}
-                csv_writer.writerow(request)
+                csv_writer.writerow(requests)
 
         shutil.move(os.path.join('Students', 'temp.csv'), self.directory)
         # dictionary_of_schedule
@@ -100,7 +100,12 @@ class Student:
             self.dictionary_of_schedule[request.get_date()].append(lis)
 
         # dictionary_of_time_interval
-        self.dictionary_of_time_interval[request.get_date()][float(request.get_start_time().replace(':','.')):float(request.get_end_time().replace(':','.'))] = True
+        try:
+            self.dictionary_of_time_interval[request.get_date()][float(request.get_start_time().replace(':','.')):float(request.get_end_time().replace(':','.'))] = True
+        except:
+            self.dictionary_of_time_interval[request.get_date()]= IntervalTree()
+            self.dictionary_of_time_interval[request.get_date()][
+            float(request.get_start_time().replace(':', '.')):float(request.get_end_time().replace(':', '.'))] = True
 
     def delete_request(self, request):
         """
