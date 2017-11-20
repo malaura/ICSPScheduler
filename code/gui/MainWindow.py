@@ -112,8 +112,7 @@ class MainWindow():
         studentView = Listbox(self.rightFrame, height=17, width=20)
         for student in self.students:
             studentView.insert(END, student)
-            print(self.students[student].get_dictionary_of_schedule())
-
+            
         studentView.grid(row=1, column=0, padx=5, columnspan=2)
         addButton = ttk.Button(self.rightFrame, text="+", width=5)
         addButton.grid(row=2, column=0, sticky=E)
@@ -245,9 +244,13 @@ class MainWindow():
         self.assignedView.delete(self.assignedView.curselection()[0])
 
     def confirmRequest(self):
+        studentSchedules = load_all_student()
+        print(studentSchedules)
+        print(self.request)
+        print(type(self.request))
         self.requests.add_request(self.request)
         for student in self.assignedView.get(0, END):
-            set_student_to_request(student, self.request)
+            set_student_to_request(studentSchedules[student], self.request)
 
         self.prompt.destroy()
 
