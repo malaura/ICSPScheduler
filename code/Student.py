@@ -14,7 +14,6 @@ class Student:
         self.name = os.path.split(directory)[1].split('.')[0]
         self.validation, self.validation_info = self.csv_file_format_validator()
         self.fieldnames = ['Date', 'Start', 'End', 'Information']
-        self.csv_file_format_validator()
         if self.validation:
             self.load()
 
@@ -168,8 +167,9 @@ class Student:
         :param date_text:
         :return:
         """
+        print('validate_date')
         try:
-            datetime.strptime(date_text, '%d/%m/%Y')
+            datetime.strptime(date_text, '%m/%d/%Y')
         except ValueError:
             if (date_text == 'Monday' or date_text == 'Tuesday' or date_text == 'Wednesday' or date_text == 'Thursday'
                 or date_text == 'Friday' or date_text == 'Saturday' or date_text == 'Sunday'):
