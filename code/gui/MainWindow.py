@@ -57,19 +57,19 @@ class MainWindow():
         requestView = Listbox(self.leftFrame, height=17, width=20)
         requestView.grid(row=1, column=0, padx=5, columnspan=2)
         editButton = ttk.Button(self.leftFrame, text="Edit", width=8)
-        editButton.grid(row=2, column=0, sticky=W, padx=5)
-
+        editButton.grid(row=2, column=0, sticky=W, padx=(5,0))
+        createButton = ttk.Button(self.leftFrame, text="Create", width=8, command=self.createNewPrompt)
+        createButton.grid(column=1, row=2)
 
         # Initalize central frame widgets
         appHighlightFont = font.Font(family='Helvetica', size=14, weight='bold')
         self.monthLabel = Label(self.centralFrame, text=self.months[self.currentMonth-1]+ " " + str(self.currentYear), font=appHighlightFont, background="gray90")
         self.monthLabel.grid(column=0, row=0, columnspan=2)
         leftButton = ttk.Button(self.centralFrame, text="<", width=5, command=self.prevMonth)
-        leftButton.grid(column=4, row=8, sticky=E, pady=5)
+        leftButton.grid(column=5, row=8, sticky=E, pady=5)
         rightButton = ttk.Button(self.centralFrame, text=">", width=5, command=self.nextMonth)
-        rightButton.grid(column=5, row=8, sticky=W, pady=5)
-        createButton = ttk.Button(self.centralFrame, text="Create", command=self.createNewPrompt)
-        createButton.grid(column=6, row=8, columnspan=2, pady=5)
+        rightButton.grid(column=6, row=8, sticky=W, pady=5)
+
 
 
         days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Satuday"]
@@ -112,7 +112,7 @@ class MainWindow():
         studentView = Listbox(self.rightFrame, height=17, width=20)
         for student in self.students:
             studentView.insert(END, student)
-            
+
         studentView.grid(row=1, column=0, padx=5, columnspan=2)
         addButton = ttk.Button(self.rightFrame, text="+", width=5)
         addButton.grid(row=2, column=0, sticky=E)
