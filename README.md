@@ -16,3 +16,5 @@ coverage run -m unittest discover
 coverage html
 
 (Click in the html file created to view the coverage of the program)
+
+Remember to comment out the imports in /code/__init__.py after testing for main to work
