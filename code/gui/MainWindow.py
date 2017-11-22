@@ -106,7 +106,7 @@ class MainWindow():
         #for request in load_all_requests():
         #    print(request)
         style = ttk.Style()
-        style.configure("Blue.TButton", background="blue")
+        style.configure("Blue.TButton", foreground="blue")
         for button in self.buttons:
             for request in load_all_requests():
                 print(button['text'].strip()+"/"+str(self.currentYear))
@@ -261,8 +261,8 @@ class MainWindow():
         self.requests.add_request(self.request)
         for student in self.assignedView.get(0, END):
             set_student_to_request(studentSchedules[student], self.request)
-
         self.prompt.destroy()
+        self.updateCalendar()
 
     def nextMonth(self):
         if self.currentMonth == 12:
@@ -301,7 +301,7 @@ class MainWindow():
             index += 1
 
         style = ttk.Style()
-        style.configure("Blue.TButton", background="blue")
+        style.configure("Blue.TButton", foreground="blue")
         for button in self.buttons:
             for request in load_all_requests():
                 print(button['text'].strip()+"/"+str(self.currentYear))
