@@ -56,7 +56,7 @@ class Requests:
 
         self.dictionary = {}
         if not os.path.exists('requests.csv'):
-            with open('requests.csv', 'w') as new_file:
+            with open('requests.csv', 'w', newline='') as new_file:
                 fieldnames = ['name', 'date', 'start_time', 'end_time', 'buffer_start', 'buffer_end']
                 csv_writer = csv.DictWriter(new_file, fieldnames=fieldnames, delimiter=',')
                 csv_writer.writeheader()
@@ -81,7 +81,7 @@ class Requests:
         with open('requests.csv', 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
 
-            with open('requests_new.csv', 'w') as new_file:
+            with open('requests_new.csv', 'w', newline='') as new_file:
                 fieldnames = ['name', 'date', 'start_time', 'end_time', 'buffer_start', 'buffer_end']
                 csv_writer = csv.DictWriter(new_file, fieldnames=fieldnames, delimiter=',')
                 csv_writer.writeheader()
@@ -111,7 +111,7 @@ class Requests:
         with open('requests.csv', 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
 
-            with open('requests_new.csv', 'w') as new_file:
+            with open('requests_new.csv', 'w', newline='') as new_file:
                 fieldnames = ['name', 'date', 'start_time', 'end_time', 'buffer_start', 'buffer_end']
                 csv_writer = csv.DictWriter(new_file, fieldnames=fieldnames, delimiter=',')
                 csv_writer.writeheader()
@@ -132,4 +132,3 @@ class Requests:
 
     def get_dictionary(self):
         return self.dictionary
-

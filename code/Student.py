@@ -80,7 +80,7 @@ class Student:
 
         with open(self.directory, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
-            with open(os.path.join('Students', 'temp.csv'), 'w') as new_file:
+            with open(os.path.join('Students', 'temp.csv'), 'w', newline='') as new_file:
                 csv_writer = csv.DictWriter(new_file, fieldnames=self.fieldnames, delimiter=',')
                 csv_writer.writeheader()
                 for line in csv_reader:
@@ -114,7 +114,7 @@ class Student:
         """
         with open(self.directory, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
-            with open(os.path.join('Students', 'temp.csv'), 'w') as new_file:
+            with open(os.path.join('Students', 'temp.csv'), 'w', newline='') as new_file:
                 csv_writer = csv.DictWriter(new_file, fieldnames=self.fieldnames, delimiter=',')
                 csv_writer.writeheader()
                 request = {'Information': request.get_name(), 'Start': request.get_start_time(),
@@ -196,4 +196,3 @@ class Student:
         except:
             return False
         return True
-
