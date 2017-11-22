@@ -26,6 +26,7 @@ def load_csv_files_in_directory(directory):
     list_of_wrong_name = []
     for name in list_name:
         directory_of_one_student = os.path.join('Students', name)
+        print(directory_of_one_student)
         student_name = name[:3]
         student = Student(directory_of_one_student)
         if student.get_validation():

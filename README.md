@@ -9,6 +9,8 @@ To run tests, type in the following on the command line from root directory
 python -m unittest discover
 
 To run with coverage, type in:
+Uncomment the imports in __init__.py from /code
+
 
 coverage run -m unittest discover
 coverage html
