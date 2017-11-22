@@ -103,9 +103,19 @@ class MainWindow():
                     curButton.configure(text=month+"/"+str(day)+"\n")
             index += 1
 
-        for request in load_all_requests():
-            print(request)
-
+        #for request in load_all_requests():
+        #    print(request)
+        style = ttk.Style()
+        style.configure("Blue.TButton", background="blue")
+        for button in self.buttons:
+            for request in load_all_requests():
+                print(button['text'].strip()+"/"+str(self.currentYear))
+                print(request)
+                if button['text'].strip()+"/"+str(self.currentYear) == request:
+                    button.configure(style="Blue.TButton")
+                else:
+                    button.configure(style="default.TButton")
+                    #pass
         # Initialize right frame widgets
         studentLabel = Label(self.rightFrame, text="Students", background="gray90")
         studentLabel.grid(row=0, column=0, columnspan=2)
@@ -200,11 +210,11 @@ class MainWindow():
         assignedLabel = ttk.Label(self.prompt, text="Assigned")
         assignedLabel.grid(row=8, column=0, pady=5)
         self.assignedView = Listbox(self.prompt, width=20, height=10, selectmode=SINGLE)
-        self.assignedView.grid(row=9, column=0, padx=5, pady=5, sticky="W", rowspan=2)
+        self.assignedView.grid(row=9, column=0, padx=(5,0), pady=5, sticky="W", rowspan=2)
         availableLabel = ttk.Label(self.prompt, text="Available Students")
         availableLabel.grid(row=8, column=2, pady=5)
         self.availableView = Listbox(self.prompt, width=20, height=10, selectmode=SINGLE)
-        self.availableView.grid(row=9, column=2, rowspan=2, padx=5, pady=5, sticky="E")
+        self.availableView.grid(row=9, column=2, rowspan=2, padx=(0,5), pady=5, sticky="E")
 
         leftButton = ttk.Button(self.prompt, text="<", command=self.assignStudent)
         leftButton.grid(row=9, column=1, sticky='S')
@@ -289,4 +299,16 @@ class MainWindow():
                 else:
                     curButton.configure(text=month+"/"+str(day)+"\n")
             index += 1
+
+        style = ttk.Style()
+        style.configure("Blue.TButton", background="blue")
+        for button in self.buttons:
+            for request in load_all_requests():
+                print(button['text'].strip()+"/"+str(self.currentYear))
+                print(request)
+                if button['text'].strip()+"/"+str(self.currentYear) == request:
+                    button.configure(style="Blue.TButton")
+                else:
+                    button.configure(style="default.TButton")
+                    #pass
         self.monthLabel.configure(text=self.months[self.currentMonth-1]+" "+str(self.currentYear))
