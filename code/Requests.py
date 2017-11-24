@@ -5,7 +5,6 @@ import shutil
 
 class Requests:
     class Request:
-
         def __init__(self, name, date, start_time, end_time, buffer_start, buffer_end):
             self.name = name
             self.date = date

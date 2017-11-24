@@ -8,6 +8,12 @@ import calendar
 
 class MainWindow():
     def __init__(self, root):
+        '''
+        Main user interface when application is opened.
+        Sets the attribute students by calling the method load_all_student() from the MainCalendar class
+        args: root - Tkinter instance
+        returns: None
+        '''
         self.root = root
         self.root.title("ICSPS Scheduler")
         self.width = 800
@@ -31,7 +37,14 @@ class MainWindow():
         #self.prompt = Prompt(self, "test", "hello word")
 
     def initializeUI(self):
+        '''
+        Initializes all Tkinter widgets necessary for main window. Displays
+        all of the requests in a calendar view using the attribute calendar and lists all of the students using
+        the attribute students
 
+        args: None
+        returns: None
+        '''
         print(load_all_requests())
         menu = Menu(self.root)
         # Use a different image if the sys platform is a Mac
@@ -130,6 +143,13 @@ class MainWindow():
         removeButton.grid(row=2, column=1, sticky=W)
 
     def createNewPrompt(self):
+        '''
+        Creates a new window that allows the user to create a new request. Calls
+        on the MainCalendar class to create a new request and updates the main
+        calendar data.
+
+        :return:
+        '''
         self.prompt = Toplevel(self.root)
         self.prompt.title("Create New Request")
         self.prompt.configure(background = "gray90")
@@ -229,6 +249,12 @@ class MainWindow():
         confirmButton.grid(row=12, column=2, sticky="E", columnspan=2, padx=5, pady=(0,5))
 
     def findStudents(self):
+        '''
+        Calls on the MainCalendar class to find the students that
+        are available during the times entered in the new request window.
+
+        :return:
+        '''
         self.request = self.requests.Request(self.nameInput.get(),
                   self.monthInput.get()+"/"+self.dayInput.get()+"/"+str(self.currentYear),
                   str(self.startHourInput.get())+":"+str(self.startMinuteInput.get()),
