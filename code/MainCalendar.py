@@ -10,15 +10,12 @@ from code.Requests import Requests
 from code.Student import Student
 
 class MainCalendar():
-    def __init__(self):
-        self.students = {}
-        self.calendar = {}
-
-    def load_csv_files_in_directory(self, directory):
+    @staticmethod
+    def load_csv_files_in_directory(directory):
         """
         Loads all of the csv files in a current directory. The default directory is Students
         Calls student object
-    
+
         :param directory: os directory
         :return: dictionary - key is string name, value is student objects (that were loaded successfully)
                  list of lists - file names that were not loaded successfully
@@ -218,9 +215,8 @@ class MainCalendar():
 
         return student.get_dictionary_of_time_interval()
 
-
-
-    def load_all_student(self):
+    @staticmethod
+    def load_all_student():
         """
         Loads all of the students from a directory
 
@@ -230,13 +226,13 @@ class MainCalendar():
 
         :return: dictionary of students
         """
-        students = load_csv_files_in_directory('Students')
+        students = MainCalendar.load_csv_files_in_directory('Students')
         # students['Jim'].get_dictionary_of_schedule()  # to get students' schedule list
         # students['Jim'].get_dictionary_of_time_interval()  # to get students' time interval object
         return students
 
-
-    def find_available_students(self, students, request):
+    @staticmethod
+    def find_available_students(students, request):
         """
         find the available student for a specific time
         :param request: object request
@@ -290,7 +286,8 @@ class MainCalendar():
 
         student.delete_request(request)
 
-    def load_all_requests(self):
+    @staticmethod
+    def load_all_requests():
         """
 
         :return: dictionary of requests

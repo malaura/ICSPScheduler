@@ -2,9 +2,10 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import font
 from .Prompt import Prompt
-from ..stubFunctions import *
+from ..MainCalendar import MainCalendar
 import calendar
-
+from code.Requests import Requests
+from code.Student import Student
 
 class MainWindow():
     def __init__(self, root):
@@ -27,7 +28,7 @@ class MainWindow():
         self.calendar = calendar.Calendar(firstweekday=6)
         self.buttons = []
 
-        self.students = load_all_student()
+        self.students = MainCalendar.load_all_student()
         #self.test = Requests()
         #self.req = self.test.Request("Syd", "01/01/2017", "12:00", "13:00", "00:05", "00:05")
         #self.test.add_request(self.req)
@@ -45,7 +46,7 @@ class MainWindow():
         args: None
         returns: None
         '''
-        print(load_all_requests())
+        print(MainCalendar.load_all_requests())
         menu = Menu(self.root)
         # Use a different image if the sys platform is a Mac
         if sys.platform == 'darwin':
@@ -121,7 +122,7 @@ class MainWindow():
         style = ttk.Style()
         style.configure("Blue.TButton", foreground="blue")
         for button in self.buttons:
-            for request in load_all_requests():
+            for request in MainCalendar.load_all_requests():
                 print(button['text'].strip()+"/"+str(self.currentYear))
                 print(request)
                 if button['text'].strip()+"/"+str(self.currentYear) == request:
@@ -262,7 +263,7 @@ class MainWindow():
                   "0:"+str(self.bufferStartInput.get()),
                   "0:"+str(self.bufferEndInput.get()))
         #self.requests.add_request(request)
-        self.availableStudents = find_available_students(self.students, self.request)
+        self.availableStudents = MainCalendar.find_available_students(self.students, self.request)
         print(self.availableStudents)
         self.availableView.delete(0, END)
         for student in self.availableStudents:
@@ -280,7 +281,7 @@ class MainWindow():
         self.assignedView.delete(self.assignedView.curselection()[0])
 
     def confirmRequest(self):
-        studentSchedules = load_all_student()
+        studentSchedules = MainCalendar.load_all_student()
         print(studentSchedules)
         print(self.request)
         print(type(self.request))
@@ -329,7 +330,7 @@ class MainWindow():
         style = ttk.Style()
         style.configure("Blue.TButton", foreground="blue")
         for button in self.buttons:
-            for request in load_all_requests():
+            for request in MainCalendar.load_all_requests():
                 print(button['text'].strip()+"/"+str(self.currentYear))
                 print(request)
                 if button['text'].strip()+"/"+str(self.currentYear) == request:
