@@ -78,6 +78,14 @@ class MainWindow():
         createButton = ttk.Button(self.leftFrame, text="Create", width=8, command=self.createNewPrompt)
         createButton.grid(column=2, row=2)
 
+        allRequests = MainCalendar.load_all_requests()
+        for request in allRequests:
+            print(allRequests)
+            print(request)
+            print(allRequests[request][0].get_name())
+            requestView.insert(END, request)
+            #print(allRequests[request].get_name)
+
         # Initalize central frame widgets
         appHighlightFont = font.Font(family='Helvetica', size=14, weight='bold')
         self.monthLabel = Label(self.centralFrame, text=self.months[self.currentMonth-1]+ " " + str(self.currentYear), font=appHighlightFont, background="gray90")
@@ -129,6 +137,7 @@ class MainWindow():
             for request in MainCalendar.load_all_requests():
                 if button['text'].strip()+"/"+str(self.currentYear) == request:
                     button.configure(style="Blue.TButton")
+
 
         # Initialize right frame widgets
         studentLabel = Label(self.rightFrame, text="Students", background="gray90")
