@@ -6,6 +6,7 @@ from ..MainCalendar import MainCalendar
 import calendar
 from code.Requests import Requests
 from code.Student import Student
+from datetime import datetime
 
 class MainWindow():
     def __init__(self, root):
@@ -18,13 +19,13 @@ class MainWindow():
         self.root = root
         self.root.title("ICSPS Scheduler")
         self.width = 850
-        self.height = 350
+        self.height = 400
         self.root.minsize(height=self.height, width=self.width)
         self.root.maxsize(height=self.height, width=self.width)
         self.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
                                 'September', 'October', 'November', 'December']
-        self.currentMonth = 12
-        self.currentYear = 2017
+        self.currentMonth = datetime.now().month
+        self.currentYear = datetime.now().year
         self.calendar = calendar.Calendar(firstweekday=6)
         self.buttons = []
 
@@ -78,7 +79,9 @@ class MainWindow():
         editButton = ttk.Button(self.leftFrame, text="Edit", width=5, command=self.editPrompt)
         editButton.grid(row=2, column=2, sticky=W)
         createButton = ttk.Button(self.leftFrame, text="Create", width=5, command=self.createNewPrompt)
-        createButton.grid(column=3, row=2, sticky=W)
+        createButton.grid(column=1, row=3, sticky=W)
+        deleteButton = ttk.Button(self.leftFrame, text="Delete", width=5, command=None)
+        deleteButton.grid(row=3, column=2, sticky=W)
 
         allRequests = MainCalendar.load_all_requests()
         for request in allRequests:
