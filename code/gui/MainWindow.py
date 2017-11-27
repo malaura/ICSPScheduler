@@ -284,6 +284,7 @@ class MainWindow():
             return
         if selectedRequest == None:
             return
+
         allRequests = MainCalendar.load_all_requests()
         selectedRequest = allRequests[selectedRequest][0]
         self.prompt = Toplevel(self.root)
@@ -298,9 +299,11 @@ class MainWindow():
             if self.students[name].check_request(requestName):
                 assignedStudents.append(name)
 
+        hey = ttk.Label(self.prompt, text="  ")
+        hey.grid(row=2, column=1, sticky="e")
         appHighlightFont = font.Font(family='Helvetica', size=18, weight='bold')
         titleLabel = ttk.Label(self.prompt, text=requestName, font=appHighlightFont)
-        titleLabel.grid(row=0, column=2, columnspan=4, sticky="W", pady=25, padx=25)
+        titleLabel.grid(row=0, column=2, columnspan=4, sticky="E", pady=40, padx=40)
         dateLabel = ttk.Label(self.prompt, text="Date:")
         dateLabel.grid(row=1, column=2, sticky="e")
         date = selectedRequest.get_date()
@@ -323,11 +326,6 @@ class MainWindow():
         for index in range(len(assignedStudents)):
             studentLabel = ttk.Label(self.prompt, text=assignedStudents[index])
             studentLabel.grid(row=5+index, column=3, sticky="e")
-        #studentEntry = ttk.Label(self.prompt, text=students)
-        #studentEntry.grid(row=3, column=3, sticky="e")
-
-
-
 
 
     def editPrompt(self):
@@ -454,9 +452,6 @@ class MainWindow():
             searchButton.grid(row=11, column=2, sticky="E", columnspan=2, padx=5)
             confirmButton = ttk.Button(self.prompt, text="Confirm", command=self.confirmRequest)
             confirmButton.grid(row=12, column=2, sticky="E", columnspan=2, padx=5, pady=(0,5))
-
-
-
 
     def validateFields(self):
         '''
