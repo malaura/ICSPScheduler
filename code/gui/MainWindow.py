@@ -133,15 +133,13 @@ class MainWindow():
                     curButton.configure(text=month+"/"+str(day)+"\n")
             index += 1
 
-        #for request in load_all_requests():
-        #    print(request)
         style = ttk.Style()
         style.configure("Blue.TButton", foreground="blue")
         for button in self.buttons:
             button.configure(style="default.TButton")
             for request in MainCalendar.load_all_requests():
                 if button['text'].strip()+"/"+str(self.currentYear) == request:
-                    button.configure(style="Blue.TButton")
+                    button.configure(style="Blue.TButton", command= lambda: self.viewPrompt(request))
 
 
         # Initialize right frame widgets
@@ -272,7 +270,7 @@ class MainWindow():
         confirmButton = ttk.Button(self.prompt, text="Confirm", command=self.confirmRequest)
         confirmButton.grid(row=12, column=2, sticky="E", columnspan=2, padx=5, pady=(0,5))
 
-    def viewPrompt(self):
+    def viewPrompt(self, request=None):
         '''
         Opens a new window to view the selected request.
         Calls on Student's check_request method to see if they
@@ -280,13 +278,18 @@ class MainWindow():
 
         :return:
         '''
-        try:
-            selectedRequest = self.requestView.get(self.requestView.curselection()[0])
-        except:
-            return
+        if request == None:
+            try:
+                selectedRequest = self.requestView.get(self.requestView.curselection()[0])
+            except:
+                return
+        else:
+            selectedRequest = request
+
         if selectedRequest == None:
             return
 
+        print(request)
         allRequests = MainCalendar.load_all_requests()
         selectedRequest = allRequests[selectedRequest][0]
         self.prompt = Toplevel(self.root)
@@ -541,7 +544,7 @@ class MainWindow():
 
         :return:
         '''
-        self.assignedView.insert(END, self.availableStudents[self.availableView.curselection()[0]])
+        self.assignedView.insert(END, self.availableView.get(self.availableView.curselection()[0]))
         self.availableView.delete(self.availableView.curselection()[0])
 
     def removeStudent(self):
@@ -642,7 +645,7 @@ class MainWindow():
             button.configure(style="default.TButton")
             for request in MainCalendar.load_all_requests():
                 if button['text'].strip()+"/"+str(self.currentYear) == request:
-                    button.configure(style="Blue.TButton")
+                    button.configure(style="Blue.TButton", command= lambda: self.viewPrompt(request))
 
 
         self.monthLabel.configure(text=self.months[self.currentMonth-1]+" "+str(self.currentYear))
