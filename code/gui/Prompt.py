@@ -43,6 +43,7 @@ class Prompt():
         self.prompt.columnconfigure(0, weight=1)
         self.prompt.columnconfigure(1, weight=1)
         self.prompt.rowconfigure(1, weight=1)
+        self.prompt.protocol("WM_DELETE_WINDOW", self.closePrompt)
         self.parent.promptWindowOpen = True
 
     def closePrompt(self):
