@@ -30,6 +30,7 @@ class MainWindow():
         self.buttons = []
 
         self.students = MainCalendar.load_all_student()
+        self.promptWindowOpen = False
         #self.test = Requests()
         #self.req = self.test.Request("Syd", "01/01/2017", "12:00", "13:00", "00:05", "00:05")
         #self.test.add_request(self.req)
