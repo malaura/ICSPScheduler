@@ -115,7 +115,7 @@ class Student:
         with open(self.directory, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
             for line in csv_reader:
-                if line['Information'] == name+'(request)':
+                if line['Information'] == name:
                     return True
         return False
 

@@ -72,11 +72,13 @@ class MainWindow():
         self.requestView = Listbox(self.leftFrame, height=17, width=20, selectmode=SINGLE, yscrollcommand=requestScroll.set)
         requestScroll.config(command=self.requestView.yview)
         requestScroll.grid(row=1, column=0, sticky="NS")
-        self.requestView.grid(row=1, column=1, padx=5, columnspan=2)
-        editButton = ttk.Button(self.leftFrame, text="Edit", width=8, command=self.editPrompt)
-        editButton.grid(row=2, column=1, sticky=W, padx=(5,0))
-        createButton = ttk.Button(self.leftFrame, text="Create", width=8, command=self.createNewPrompt)
-        createButton.grid(column=2, row=2)
+        self.requestView.grid(row=1, column=1, padx=5, columnspan=3)
+        viewButton = ttk.Button(self.leftFrame, text="View", width=5, command=self.viewPrompt)
+        viewButton.grid(row=2, column=1, sticky=W)
+        editButton = ttk.Button(self.leftFrame, text="Edit", width=5, command=self.editPrompt)
+        editButton.grid(row=2, column=2, sticky=W)
+        createButton = ttk.Button(self.leftFrame, text="Create", width=5, command=self.createNewPrompt)
+        createButton.grid(column=3, row=2, sticky=W)
 
         allRequests = MainCalendar.load_all_requests()
         for request in allRequests:
@@ -266,6 +268,64 @@ class MainWindow():
         searchButton.grid(row=11, column=2, sticky="E", columnspan=2, padx=5)
         confirmButton = ttk.Button(self.prompt, text="Confirm", command=self.confirmRequest)
         confirmButton.grid(row=12, column=2, sticky="E", columnspan=2, padx=5, pady=(0,5))
+
+    def viewPrompt(self):
+        '''
+        View selected request
+
+        :return:
+        '''
+        try:
+            selectedRequest = self.requestView.get(self.requestView.curselection()[0])
+        except:
+            return
+        if selectedRequest == None:
+            return
+        allRequests = MainCalendar.load_all_requests()
+        selectedRequest = allRequests[selectedRequest][0]
+        self.prompt = Toplevel(self.root)
+        self.prompt.minsize(width=200, height=300)
+        self.prompt.maxsize(width=450, height=500)
+        self.prompt.title('View Request')
+        self.prompt.configure(background="gray90")
+        requestName = selectedRequest.get_name()
+
+        assignedStudents = []
+        for name in self.students:
+            if self.students[name].check_request(requestName):
+                assignedStudents.append(name)
+
+        appHighlightFont = font.Font(family='Helvetica', size=18, weight='bold')
+        titleLabel = ttk.Label(self.prompt, text=requestName, font=appHighlightFont)
+        titleLabel.grid(row=0, column=2, columnspan=4, sticky="W", pady=25, padx=25)
+        dateLabel = ttk.Label(self.prompt, text="Date:")
+        dateLabel.grid(row=1, column=2, sticky="e")
+        date = selectedRequest.get_date()
+        dateEntry = ttk.Label(self.prompt, text=date)
+        dateEntry.grid(row=1, column=3, sticky="e")
+        startLabel = ttk.Label(self.prompt, text="Start Time:")
+        startLabel.grid(row=2, column=2, sticky="e")
+        startEntry = ttk.Label(self.prompt, text=selectedRequest.get_start_time())
+        startEntry.grid(row=2, column=3, sticky="e")
+        endLabel = ttk.Label(self.prompt, text="End Time:")
+        endLabel.grid(row=3, column=2, sticky="e")
+        endEntry = ttk.Label(self.prompt, text=selectedRequest.get_end_time())
+        endEntry.grid(row=3, column=3, sticky="e")
+        if len(assignedStudents) == 1:
+            studentTitle = "Student:"
+        else:
+            studentTitle = "Students:"
+        studentLabel = ttk.Label(self.prompt, text=studentTitle)
+        studentLabel.grid(row=4, column=2, sticky="e")
+        for index in range(len(assignedStudents)):
+            studentLabel = ttk.Label(self.prompt, text=assignedStudents[index])
+            studentLabel.grid(row=5+index, column=3, sticky="e")
+        #studentEntry = ttk.Label(self.prompt, text=students)
+        #studentEntry.grid(row=3, column=3, sticky="e")
+
+
+
+
 
     def editPrompt(self):
         selectedRequest = self.requestView.get(self.requestView.curselection()[0])
