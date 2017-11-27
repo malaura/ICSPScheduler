@@ -26,6 +26,16 @@ class Student:
         if self.validation:
             self.load()
 
+    def open_file(self):
+        """
+        Open file with default application
+        :return: None
+        """
+        try:
+            os.system("open " + self.directory)
+        except:
+            os.system("start " + self.directory)
+
     def load(self):
         """
         Gets the csv file corresponding to the student schedule and loads
@@ -261,3 +271,4 @@ class Student:
         except:
             return False
         return True
+
