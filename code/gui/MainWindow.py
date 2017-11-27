@@ -30,6 +30,7 @@ class MainWindow():
         self.buttons = []
 
         self.students = MainCalendar.load_all_student()
+        self.requestWindowOpen = False
         self.promptWindowOpen = False
         #self.test = Requests()
         #self.req = self.test.Request("Syd", "01/01/2017", "12:00", "13:00", "00:05", "00:05")
@@ -159,6 +160,17 @@ class MainWindow():
         removeButton = ttk.Button(self.rightFrame, text="-", width=5)
         removeButton.grid(row=2, column=1, sticky=W)
 
+    def closeWindow(self):
+        '''
+        Closes the window prompt.
+        Sets the promptWindowOpen attribute from MainWindow to false
+
+        :return:
+        '''
+
+        self.requestWindowOpen = False
+        self.prompt.destroy()
+
     def createNewPrompt(self):
         '''
         Creates a new window that allows the user to create a new request. Calls
@@ -167,6 +179,8 @@ class MainWindow():
 
         :return:
         '''
+        if self.requestWindowOpen:
+            return
         # Initialize labels
         self.prompt = Toplevel(self.root)
         self.prompt.title("Create New Request")
@@ -264,12 +278,13 @@ class MainWindow():
         rightButton = ttk.Button(self.prompt, text=">", command=self.removeStudent)
         rightButton.grid(row=10, column=1, sticky='N')
 
-        cancelButton = ttk.Button(self.prompt, text="Cancel", command=self.prompt.destroy)
+        cancelButton = ttk.Button(self.prompt, text="Cancel", command=self.closeWindow)
         cancelButton.grid(row=12, column=0, sticky="W", padx=5, pady=(0,5))
         searchButton = ttk.Button(self.prompt, text="Search", command=self.findStudents)
         searchButton.grid(row=11, column=2, sticky="E", columnspan=2, padx=5)
         confirmButton = ttk.Button(self.prompt, text="Confirm", command=self.confirmRequest)
         confirmButton.grid(row=12, column=2, sticky="E", columnspan=2, padx=5, pady=(0,5))
+        self.requestWindowOpen = True
 
     def viewPrompt(self, request=None):
         '''
@@ -460,7 +475,7 @@ class MainWindow():
             rightButton = ttk.Button(self.prompt, text=">", command=self.removeStudent)
             rightButton.grid(row=10, column=1, sticky='N')
 
-            cancelButton = ttk.Button(self.prompt, text="Cancel", command=self.prompt.destroy)
+            cancelButton = ttk.Button(self.prompt, text="Cancel", command=self.closeWindow())
             cancelButton.grid(row=12, column=0, sticky="W", padx=5, pady=(0,5))
             searchButton = ttk.Button(self.prompt, text="Search", command=self.findStudents)
             searchButton.grid(row=11, column=2, sticky="E", columnspan=2, padx=5)
@@ -583,7 +598,7 @@ class MainWindow():
         self.requests.add_request(self.request)
         for student in self.assignedView.get(0, END):
             MainCalendar.set_student_to_request(studentSchedules[student], self.request)
-        self.prompt.destroy()
+        self.closeWindow()
         self.updateCalendar()
 
     def nextMonth(self):
