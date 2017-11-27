@@ -349,7 +349,7 @@ class MainWindow():
         for index in range(len(assignedStudents)):
             studentLabel = ttk.Label(self.prompt, text=assignedStudents[index])
             studentLabel.grid(row=5+index, column=3, sticky="e")
-
+        self.requestWindowOpen = True
 
     def editPrompt(self):
         '''
@@ -481,6 +481,8 @@ class MainWindow():
             searchButton.grid(row=11, column=2, sticky="E", columnspan=2, padx=5)
             confirmButton = ttk.Button(self.prompt, text="Confirm", command=self.confirmRequest)
             confirmButton.grid(row=12, column=2, sticky="E", columnspan=2, padx=5, pady=(0,5))
+        self.requestWindowOpen = True
+
 
     def validateFields(self):
         '''
