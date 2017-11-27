@@ -107,7 +107,7 @@ class Requests:
         '''
 
         self.dictionary = {}
-        lis_of_duplicate_request = []
+        self.lis_of_duplicate_request = []
         if not os.path.exists('requests.csv'):
             with open('requests.csv', 'w', newline='') as new_file:
                 fieldnames = ['name', 'date', 'start_time', 'end_time', 'buffer_start', 'buffer_end']
