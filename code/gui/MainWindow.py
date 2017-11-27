@@ -163,7 +163,7 @@ class MainWindow():
     def createNewPrompt(self):
         '''
         Creates a new window that allows the user to create a new request. Calls
-        on the MainCalendar class to create a new request and updates the main
+        on the MainCalendar class to create a new request and updates the MainWindow attributes
         calendar data.
 
         :return:
@@ -274,7 +274,9 @@ class MainWindow():
 
     def viewPrompt(self):
         '''
-        View selected request
+        Opens a new window to view the selected request.
+        Calls on Student's check_request method to see if they
+        were assigned to the specific request.
 
         :return:
         '''
@@ -317,7 +319,9 @@ class MainWindow():
         endLabel.grid(row=3, column=2, sticky="e")
         endEntry = ttk.Label(self.prompt, text=selectedRequest.get_end_time())
         endEntry.grid(row=3, column=3, sticky="e")
-        if len(assignedStudents) == 1:
+        if len(assignedStudents) == 0:
+            studentTitle = ""
+        elif len(assignedStudents) == 1:
             studentTitle = "Student:"
         else:
             studentTitle = "Students:"
@@ -329,6 +333,12 @@ class MainWindow():
 
 
     def editPrompt(self):
+        '''
+        Opens a new window to edit the selected request.
+        Gets the request data by loading all of the request from MainCalendar.
+
+        :return:
+        '''
         selectedRequest = self.requestView.get(self.requestView.curselection()[0])
 
         if selectedRequest != None:
@@ -455,12 +465,25 @@ class MainWindow():
 
     def validateFields(self):
         '''
-        Validates the current fields
-        :return:
+        Validates the fields in creating a new request.
+        Checks if the fields are empty, if the start time is before the end time,
+        if the name input is alphanumeric and is less than 40 characters. Will show prompt
+        error if otherwise.
+        If the buffer time is empty, it sets it to 0.
+
+        :return: Boolean: true if all of the fields are validated and consistent with the
+        requirements, false if otherwise
         '''
+
         # Validation for input
         if self.nameInput.get() == '':
             Prompt(self, "Invalid Input", "Please provide a name for the request")
+            return False
+        if len(self.nameInput.get()) > 40:
+            Prompt(self, "Invalid Input", "Name of the request must be less than 40 characters")
+            return False
+        if not self.nameInput.get().replace(" ", "").isalnum():
+            Prompt(self, "Invalid Input", "Name of the request must only have alphanumeric characters")
             return False
         if self.monthInput.get() == '':
             Prompt(self, "Invalid Input", "Please provide a month for the request")
@@ -513,14 +536,31 @@ class MainWindow():
 
 
     def assignStudent(self):
+        '''
+        Moves a student from the search window to the assigned student window
+
+        :return:
+        '''
         self.assignedView.insert(END, self.availableStudents[self.availableView.curselection()[0]])
         self.availableView.delete(self.availableView.curselection()[0])
 
     def removeStudent(self):
+        '''
+        Moves a student from the assigned window to the search student window
+
+        :return:
+        '''
         self.availableView.insert(END, self.assignedView.get(self.assignedView.curselection()[0]))
         self.assignedView.delete(self.assignedView.curselection()[0])
 
     def confirmRequest(self):
+        '''
+        Confirms a request. Validates all of the field data by calling validateFields(),
+        assigns the student(s) to the request by calling on the MainCalendar function
+        set_student_to_request
+
+        :return:
+        '''
         if self.validateFields() == False:
             return
 
@@ -543,6 +583,12 @@ class MainWindow():
         self.updateCalendar()
 
     def nextMonth(self):
+        '''
+        Calculates the next month from currentMonth and
+        displays it by updating the calendar view calling updateCalendar()
+
+        :return:
+        '''
         if self.currentMonth == 12:
             self.currentMonth = 1
             self.currentYear += 1
@@ -551,6 +597,12 @@ class MainWindow():
         self.updateCalendar()
 
     def prevMonth(self):
+        '''
+        Calculates the previous month from currentMonth and
+        displays it by updating the calendar view calling updateCalendar()
+
+        :return:
+        '''
         if self.currentMonth == 1:
             self.currentMonth = 12
             self.currentYear -=1
@@ -559,6 +611,12 @@ class MainWindow():
         self.updateCalendar()
 
     def updateCalendar(self):
+        '''
+        Updates the calendar view with the requests and
+        the attributes in MainWindow.
+
+        :return:
+        '''
         index = 0
         for button in self.buttons:
             button.config(text=" "+"\n")
