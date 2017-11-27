@@ -14,9 +14,12 @@ class Prompt():
         self.prompt = Toplevel(self.parent.root)
         self.prompt.attributes("-topmost", True)
         self.prompt.minsize(width=225, height=75)
-        self.prompt.maxsize(width=225, height=75)
+        self.prompt.maxsize(width=450, height=200)
         self.prompt.title(self.title)
         messageLabel = Label(self.prompt, text=self.text)
+
+        if self.action == None:
+            self.action = self.prompt.destroy
         okButton = Button(self.prompt, text="Ok", command=self.action, width=10)
         cancelButton = Button(self.prompt, text="Cancel", command=self.prompt.destroy, width=10)
 

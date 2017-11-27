@@ -37,10 +37,10 @@ class TestRequests(unittest.TestCase):
     def test_request_get_actual_start_time(self):
         request = Requests.Request('test', '11/25/2017', '00:00', '02:00', '00:00', '00:00')
         get_actual_start_time = request.get_actual_start_time()
-        self.assertEqual(get_actual_start_time, '00:00')
+        self.assertEqual(get_actual_start_time, 0.0)
 
     def test_request_get_actual_end_time(self):
         request = Requests.Request('test', '11/25/2017', '00:00', '02:00', '00:00', '00:00')
         get_actual_end_time = request.get_actual_end_time()
-        self.assertEqual(get_actual_end_time, '02:00')
+        self.assertEqual(get_actual_end_time, 2.0)
 

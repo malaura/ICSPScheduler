@@ -267,6 +267,40 @@ class MainWindow():
         confirmButton = ttk.Button(self.prompt, text="Confirm", command=self.confirmRequest)
         confirmButton.grid(row=12, column=2, sticky="E", columnspan=2, padx=5, pady=(0,5))
 
+    def validateFields(self):
+        '''
+        Validates the current fields
+        :return:
+        '''
+        # Validation for input
+        if self.nameInput.get() == '':
+            Prompt(self, "Invalid Input", "Please provide a name for the request")
+            return False
+        if self.monthInput.get() == '':
+            Prompt(self, "Invalid Input", "Please provide a month for the request")
+            return False
+        if self.dayInput.get() == '':
+            Prompt(self, "Invalid Input", "Please provide a day for the request")
+            return False
+        if self.startHourInput.get() == '' or self.startMinuteInput.get() == '':
+            Prompt(self, "Invalid Input", "Please fill all of the fields for the start time for the request")
+            return False
+        if self.endHourInput.get() == '' or self.endMinuteInput.get() == '':
+            Prompt(self, "Invalid Input", "Please fill all of the fields for the end time for the request")
+            return False
+
+        # If the end time is greater than the start time
+        if self.startHourInput.get() + self.startMinuteInput.get() >= self.endHourInput.get() + self.endMinuteInput.get():
+            Prompt(self, "Invalid Input", "Start time must happen before the end time of the request ")
+            return False
+
+        # If it passes all validation we are going to pass the request in, and set the buffer time to 0 from start
+        if self.bufferStartInput.get() == '':
+            self.bufferStartInput.current(0)
+        if self.bufferEndInput.get() == '':
+            self.bufferEndInput.current(0)
+        return True
+
     def findStudents(self):
         '''
         Calls on the MainCalendar class to find the students that
@@ -274,6 +308,9 @@ class MainWindow():
 
         :return:
         '''
+        if self.validateFields() == False:
+            return
+
         self.request = self.requests.Request(self.nameInput.get(),
                   self.monthInput.get()+"/"+self.dayInput.get()+"/"+str(self.currentYear),
                   str(self.startHourInput.get())+":"+str(self.startMinuteInput.get()),
@@ -298,6 +335,17 @@ class MainWindow():
         self.assignedView.delete(self.assignedView.curselection()[0])
 
     def confirmRequest(self):
+        if self.validateFields() == False:
+            return
+
+
+        self.request = self.requests.Request(self.nameInput.get(),
+                  self.monthInput.get()+"/"+self.dayInput.get()+"/"+str(self.currentYear),
+                  str(self.startHourInput.get())+":"+str(self.startMinuteInput.get()),
+                  str(self.endHourInput.get())+":"+str(self.endMinuteInput.get()),
+                  "0:"+str(self.bufferStartInput.get()),
+                  "0:"+str(self.bufferEndInput.get()))
+
         studentSchedules = MainCalendar.load_all_student()
         print(studentSchedules)
         print(self.request)
