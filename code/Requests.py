@@ -6,6 +6,16 @@ import shutil
 class Requests:
     class Request:
         def __init__(self, name, date, start_time, end_time, buffer_start, buffer_end):
+            '''
+            name - request's name
+            date - date of request
+            start_time - start time of request
+            end_time - end time of request
+            buffer_start - extra time added before request
+            buffer_end - extra time added after request
+            actual_start_time - actual start time of request after adding buffer times
+            actual_end_time - actual end time of request after adding buffer times
+            '''
             self.name = name
             self.date = date
             self.start_time = start_time
@@ -28,30 +38,73 @@ class Requests:
             self.actual_end_time = float('%s.%s' % (hour, minute))
 
         def get_name(self):
+            '''
+            Getter for the request's name
+
+            :return: name - string
+            '''
             return self.name
 
         def get_date(self):
+            '''
+            Getter for the request's date
+
+            :return: date - string
+            '''
             return self.date
 
         def get_start_time(self):
+            '''
+            Getter for the request's start time
+
+            :return: start_time - string
+            '''
             return self.start_time
 
         def get_end_time(self):
+            '''
+            Getter for the request's end time
+
+            :return: end_time - string
+            '''
             return self.end_time
 
         def get_buffer_start(self):
+            '''
+            Getter for the request's buffer start time
+
+            :return: start_time - string
+            '''
             return self.buffer_start
 
         def get_buffer_end(self):
+            '''
+            Getter for the request's buffer end time
+
+            :return: end_time - string
+            '''
             return self.buffer_end
 
         def get_actual_start_time(self):
+            '''
+            Getter for the request's actual start time
+
+            :return: actual_start_time - float
+            '''
             return self.actual_start_time
 
         def get_actual_end_time(self):
+            '''
+            Getter for the request's actual end time
+
+            :return: actual_end_time - float
+            '''
             return self.actual_end_time
 
     def __init__(self):
+        '''
+        dictionary: contains all of the requests information
+        '''
 
         self.dictionary = {}
         if not os.path.exists('requests.csv'):
@@ -72,7 +125,8 @@ class Requests:
 
     def add_request(self, request):
         """
-        add request to requests.csv and dictionary
+        Adds request to requests.csv and dictionary
+
         :param request: object request
         :return: None
         """
@@ -102,7 +156,8 @@ class Requests:
 
     def delete_request(self, request):
         """
-        delete request from requests.csv and dictionary
+        Deletes a  request from requests.csv and dictionary
+
         :param request: object request
         :return: None
         """
@@ -130,4 +185,9 @@ class Requests:
             del self.dictionary[date]
 
     def get_dictionary(self):
+        '''
+        Getter for a requests' dictionary
+
+        :return: dictionary - dictionary
+        '''
         return self.dictionary
