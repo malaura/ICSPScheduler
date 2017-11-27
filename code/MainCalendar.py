@@ -264,8 +264,8 @@ class MainCalendar():
 
         return lis
 
-
-    def set_student_to_request(self, student, request):
+    @staticmethod
+    def set_student_to_request(student, request):
         """
 
         :param request: object request
@@ -296,3 +296,17 @@ class MainCalendar():
         requests = Requests()
         return requests.get_dictionary()
 
+    @staticmethod
+    def find_assigned_student(students, request):
+        """
+        find the assigned students
+        :param students: dictionary of all the student objects
+        :param request: request object
+        :return: list of the names of the assigned students
+        """
+        lis = []
+        for student in students:
+            if student.check_request(request.get_name()):
+                lis.append(student.get_student_name())
+
+        return lis

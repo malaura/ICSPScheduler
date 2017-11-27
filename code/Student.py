@@ -106,6 +106,19 @@ class Student:
             self.dictionary_of_time_interval[request.get_date()][
             float(request.get_start_time().replace(':', '.')):float(request.get_end_time().replace(':', '.'))] = True
 
+    def check_request(self, name):
+        """
+        check if the request is assigned to this student
+        :param name: the request's name
+        :return: True if the request is assigned to this student, otherwise False.
+        """
+        with open(self.directory, 'r') as csv_file:
+            csv_reader = csv.DictReader(csv_file)
+            for line in csv_reader:
+                if line['Information'] == name+'(request)':
+                    return True
+        return False
+
     def delete_request(self, request):
         """
         delete the request from the calendar
