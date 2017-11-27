@@ -3,6 +3,12 @@ from tkinter import ttk
 
 class Prompt():
     def __init__(self, parent, title, text, action=None):
+        '''
+        parent - reference to the parent's tkinter object
+        title - text containing the title of prompt
+        text - text containing the description of prompt
+        action - action the prompt will do perform if button is pressed
+        '''
         self.parent = parent
         self.title = title
         self.text = text
