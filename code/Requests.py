@@ -107,6 +107,7 @@ class Requests:
         '''
 
         self.dictionary = {}
+        lis_of_duplicate_request = []
         if not os.path.exists('requests.csv'):
             with open('requests.csv', 'w', newline='') as new_file:
                 fieldnames = ['name', 'date', 'start_time', 'end_time', 'buffer_start', 'buffer_end']
@@ -114,14 +115,28 @@ class Requests:
                 csv_writer.writeheader()
         else:
             with open('requests.csv', 'r') as csv_file:
-                csv_reader = csv.DictReader(csv_file)
-                for line in csv_reader:
-                    request = Requests.Request(line['name'], line['date'], line['start_time'], line['end_time'], line['buffer_start'], line['buffer_end'])
-                    try:
-                        self.dictionary['%s' % line['date']].append(request)
-                    except:
-                        self.dictionary['%s' % line['date']] = []
-                        self.dictionary['%s' % line['date']].append(request)
+                self.csv_reader = csv.DictReader(csv_file)
+                for line in self.csv_reader:
+                    request = Requests.Request(line['name'], line['date'], line['start_time'], line['end_time'],
+                                               line['buffer_start'], line['buffer_end'])
+                    if '%s' % line['date'] in self.dictionary:
+                        self.lis_of_duplicate_request.append(self.dictionary['%s' % line['date']][0])
+                    self.dictionary['%s' % line['date']] = []
+                    self.dictionary['%s' % line['date']].append(request)
+        for request in self.lis_of_duplicate_request:
+            self.delete_request(request)
+
+    def check_duplicate(self):
+        """
+        check if there are some requests in the same day.
+        :param csv_reader: DictReader
+        :return: True if the no duplicate happens, False if duplicate happens.
+        """
+
+        if len(self.lis_of_duplicate_request) == 0:
+            return True,'Format is correct'
+        else:
+            return False, 'There are requests in the same day!'
 
     def add_request(self, request):
         """
@@ -178,8 +193,10 @@ class Requests:
 
         shutil.move('requests_new.csv', 'requests.csv')
         date = request.get_date()
-
-        self.dictionary[date].remove(request)
+        try:
+            self.dictionary[date].remove(request)
+        except:
+            pass
 
         if not self.dictionary[date]:
             del self.dictionary[date]
