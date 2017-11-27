@@ -8,6 +8,15 @@ from intervaltree import IntervalTree, Interval
 
 class Student:
     def __init__(self, directory):
+        '''
+        name - students name
+        directory - the directory of the student's schedule
+        dictionary_of_schedule - student's schedule
+        dictionary_of_time_interval - student's available times
+        validation - specifies if the student's schedule is in the correct format
+        validation_info - specifies detailed information on student's schedule
+        fieldnames - headers of the student's schedule
+        '''
         self.directory = directory
         self.dictionary_of_schedule = {}
         self.dictionary_of_time_interval = {}
@@ -19,7 +28,8 @@ class Student:
 
     def load(self):
         """
-        :return: a dictionary that contains information of the student
+        Gets the csv file corresponding to the student schedule and loads
+        the information to the dictionary_of_schedule
         """
 
         with open(self.directory, 'r') as csv_file:
@@ -40,40 +50,74 @@ class Student:
                 self.dictionary_of_time_interval[key][start:end] = True
 
     def get_directory(self):
+        '''
+        Getter for the student's schedule file directory
+
+        :return: dictionary
+        '''
         return self.directory
 
     def get_validation_info(self):
+        '''
+        Getter for the validation info of the student
+
+        :return: validation_info - string
+        '''
         return self.validation_info
 
     def get_validation(self):
+        '''
+        Getter for validation of the student
+
+        :return: validation - boolean
+        '''
         return self.validation
 
     def get_dictionary_of_schedule(self):
+        '''
+        Getter for the dictionary of schedule of the student
+
+        :return: dictionary_of_schedule - dictionary
+        '''
         return self.dictionary_of_schedule
 
     def get_dictionary_of_time_interval(self):
+        '''
+        Getter for the dictionary of time interval of the student
+
+        :return: dictionary_of_time_interval - dictionary
+        '''
         return self.dictionary_of_time_interval
 
     def get_student_name(self):
+        '''
+        Getter for the student name
+
+        :return: name - string
+        '''
         return self.name
 
     def edit_file(self):
         """
-        open the file with the default application
+        Opens the student's schedule with the default application
+
         :return: None
         """
         os.system('open ./%s' % self.directory)
 
     def delete_file(self):
         """
-        delete the file
+        Deletes the student's schedule file from the directory
+
         :return: None
         """
         os.remove(self.directory)
 
     def add_request(self, request):
         """
-        add a request to Student's calendar
+        Adds a request to Student's calendar. Sets the time as unavailable in the dictionary_of_schedule
+        and dictionary_of_time_interval.
+
         :param request: request object
         :return: None
         """
@@ -108,7 +152,8 @@ class Student:
 
     def check_request(self, name):
         """
-        check if the request is assigned to this student
+        Checks if the request is assigned to this student
+
         :param name: the request's name
         :return: True if the request is assigned to this student, otherwise False.
         """
@@ -121,7 +166,8 @@ class Student:
 
     def delete_request(self, request):
         """
-        delete the request from the calendar
+        Deletes a request from the student's calendar
+
         :param request: request object
         :return: None
         """
@@ -142,6 +188,7 @@ class Student:
         self.dictionary_of_schedule[request.get_date()].remove([request.get_start_time(), request.get_end_time(), request.get_name()])
         if self.dictionary_of_schedule[request.get_date()] == []:
             del self.dictionary_of_schedule[request.get_date()]
+
         # dictionary_of_time_interval
         self.dictionary_of_time_interval[request.get_date()].remove(
             Interval(float(request.get_start_time().replace(':', '.')), float(request.get_end_time().replace(':', '.')), True))
@@ -150,7 +197,8 @@ class Student:
 
     def csv_file_format_validator(self):
         """
-        Validates if csv file is in the correct standard format.
+        Validates if csv file is in the correct standard format for our schedule.
+        Check the wiki to see what is the current format we are accepting.
 
         :return: boolean - true if the file is in the successful format, false if otherwise
                  list - first index file name, second index is string that specifies the first error it encountered
@@ -176,9 +224,11 @@ class Student:
     @staticmethod
     def validate_date(date_text):
         """
-        method to validate the date
-        :param date_text:
-        :return:
+        Method to validate the date field is in the correct format. Accepts mm/dd/yy or a day of the week
+        (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
+
+        :param date_text - string
+        :return: boolean - true if it is in the correct format false if otherwise
         """
         print('validate_date')
         try:
@@ -194,9 +244,11 @@ class Student:
     @staticmethod
     def validate_start_or_end(text):
         """
-        method to validate the start or end format
-        :param text:
-        :return:
+        Method to validate the start or end time format of a request.
+        Time should be between 00:00 and 23:59.
+
+        :param text - string: time
+        :return: boolean - true if it is valid false if otherwise
         """
         try:
             hour, minute = text.split(':')
