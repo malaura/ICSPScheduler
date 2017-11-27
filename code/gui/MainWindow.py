@@ -129,18 +129,21 @@ class MainWindow():
                 curButton.configure(text="\n")
             else:
                 if day < 10:
-                    curButton.configure(text=month+"/"+"0"+str(day)+"\n")
+                    curButton.configure(text=month+"/"+"0"+str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+"0"+str(day)))
                 else:
-                    curButton.configure(text=month+"/"+str(day)+"\n")
+                    curButton.configure(text=month+"/"+str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+str(day)))
             index += 1
 
         style = ttk.Style()
         style.configure("Blue.TButton", foreground="blue")
+
         for button in self.buttons:
             button.configure(style="default.TButton")
             for request in MainCalendar.load_all_requests():
                 if button['text'].strip()+"/"+str(self.currentYear) == request:
-                    button.configure(style="Blue.TButton", command= lambda: self.viewPrompt(request))
+                    button.configure(style="Blue.TButton", command= lambda request=request: self.viewPrompt(request))
+
+
 
 
         # Initialize right frame widgets
@@ -159,7 +162,7 @@ class MainWindow():
         removeButton = ttk.Button(self.rightFrame, text="-", width=5)
         removeButton.grid(row=2, column=1, sticky=W)
 
-    def createNewPrompt(self):
+    def createNewPrompt(self, date=None):
         '''
         Creates a new window that allows the user to create a new request. Calls
         on the MainCalendar class to create a new request and updates the MainWindow attributes
@@ -167,6 +170,7 @@ class MainWindow():
 
         :return:
         '''
+        print(date)
         # Initialize labels
         self.prompt = Toplevel(self.root)
         self.prompt.title("Create New Request")
@@ -305,8 +309,8 @@ class MainWindow():
             if self.students[name].check_request(requestName):
                 assignedStudents.append(name)
 
-        hey = ttk.Label(self.prompt, text="  ")
-        hey.grid(row=2, column=1, sticky="e")
+        padding = ttk.Label(self.prompt, text="  ")
+        padding.grid(row=2, column=1, sticky="e")
         appHighlightFont = font.Font(family='Helvetica', size=18, weight='bold')
         titleLabel = ttk.Label(self.prompt, text=requestName, font=appHighlightFont)
         titleLabel.grid(row=0, column=2, columnspan=4, sticky="E", pady=40, padx=40)
@@ -635,9 +639,9 @@ class MainWindow():
                 curButton.configure(text=" "+"\n")
             else:
                 if day < 10:
-                    curButton.configure(text=month+"/"+"0"+str(day)+"\n")
+                    curButton.configure(text=month+"/"+"0"+str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+"0"+str(day)))
                 else:
-                    curButton.configure(text=month+"/"+str(day)+"\n")
+                    curButton.configure(text=month+"/"+str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+str(day)))
             index += 1
 
         style = ttk.Style()
@@ -646,7 +650,7 @@ class MainWindow():
             button.configure(style="default.TButton")
             for request in MainCalendar.load_all_requests():
                 if button['text'].strip()+"/"+str(self.currentYear) == request:
-                    button.configure(style="Blue.TButton", command= lambda: self.viewPrompt(request))
+                    button.configure(style="Blue.TButton", command= lambda request=request: self.viewPrompt(request))
 
 
         self.monthLabel.configure(text=self.months[self.currentMonth-1]+" "+str(self.currentYear))
