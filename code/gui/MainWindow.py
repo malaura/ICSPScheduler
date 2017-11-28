@@ -159,7 +159,7 @@ class MainWindow():
         file_name = file.strip().split('/')[-1]
         if file_name in list_name:
             Prompt(self, "Invalid file name", "A file with that name already exists, please choose a new name")
-            pass ####################### Need a prompt to tell user there has been a file with the same name
+
         else:
             student = Student(file)
             if student.get_validation():
@@ -170,9 +170,6 @@ class MainWindow():
                 self.studentView.insert(END, student.get_student_name())
             else:
                 Prompt(self, "Incorrect Format", "The format of the file is incorrect.")
-                pass ############ Need a prompt to tell user the format of the file is not correct
-
-
 
     def closeWindow(self):
         '''
@@ -195,6 +192,7 @@ class MainWindow():
         '''
         if self.requestWindowOpen:
             return
+
         # Initialize labels
         self.prompt = Toplevel(self.root)
         self.prompt.protocol("WM_DELETE_WINDOW", self.closeWindow)
@@ -219,6 +217,9 @@ class MainWindow():
         bufferEnd.grid(row=7, column=0, sticky="e")
 
         #Initalize inputs
+        if date != None:
+            date = date.split("/")
+
         self.nameInput = ttk.Entry(self.prompt, width=30)
         self.nameInput.grid(row=1, column=1, columnspan=2)
         self.monthInput = ttk.Combobox(self.prompt, width=27, state="readonly")
@@ -229,6 +230,8 @@ class MainWindow():
             else:
                 months.append(str(i))
         self.monthInput['values'] = months
+        if date != None:
+            self.monthInput.current(int(date[0])-1)
         self.monthInput.grid(row=2, column=1, columnspan=2)
         self.dayInput = ttk.Combobox(self.prompt, width=27, state="readonly")
         days = []
@@ -238,6 +241,8 @@ class MainWindow():
             else:
                 days.append(str(i))
         self.dayInput['values'] = days
+        if date != None:
+            self.dayInput.current(int(date[1])-1)
         self.dayInput.grid(row=3, column=1, columnspan=2)
         self.startHourInput = ttk.Combobox(self.prompt, width=8, state="readonly")
         self.startHourInput.grid(row=4, column=1, sticky="E")
