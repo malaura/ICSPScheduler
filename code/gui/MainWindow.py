@@ -377,7 +377,7 @@ class MainWindow():
         studentLabel.grid(row=4, column=2, sticky="e")
         for index in range(len(assignedStudents)):
             studentLabel = ttk.Label(self.prompt, text=assignedStudents[index])
-            studentLabel.grid(row=5+index, column=3, sticky="e")
+            studentLabel.grid(row=4+index, column=3, sticky="e")
         self.requestWindowOpen = True
 
     def editPrompt(self):
@@ -474,7 +474,7 @@ class MainWindow():
         self.endHourInput = ttk.Combobox(self.prompt, width=8, state="readonly")
         self.endHourInput.grid(row=5, column=1, padx=(75,0))
         self.endHourInput['values'] = hours
-        self.endHourInput.current(int(endTime[0])-1)
+        self.endHourInput.current(int(endTime[0]))
         self.endMinuteInput = ttk.Combobox(self.prompt, width=8, state="readonly")
         self.endMinuteInput.grid(row=5, column=2, sticky="W")
         self.endMinuteInput['values'] = times
