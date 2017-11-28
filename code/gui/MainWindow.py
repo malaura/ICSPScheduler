@@ -1,6 +1,6 @@
 import shutil
 from tkinter import *
-from tkinter import ttk, filedialog
+from tkinter import ttk, filedialog, messagebox
 from tkinter import font
 
 import os
@@ -11,6 +11,7 @@ import calendar
 from code.Requests import Requests
 from code.Student import Student
 from datetime import datetime
+
 
 class MainWindow():
     def __init__(self, root):
@@ -153,12 +154,16 @@ class MainWindow():
         self.studentView.grid(row=1, column=0, padx=5, columnspan=2)
         addButton = ttk.Button(self.rightFrame, text="+", width=5, command = self.add_student)
         addButton.grid(row=2, column=0, sticky=E)
-        removeButton = ttk.Button(self.rightFrame, text="-", width=5)
+        removeButton = ttk.Button(self.rightFrame, text="-", width=5, command = lambda: messagebox.askokcancel("Confirmation", "Do you want to delete %s?"%self.studentView.get(self.studentView.curselection()), command= self.delete_student()))
         removeButton.grid(row=2, column=1, sticky=W)
         openButton = ttk.Button(self.rightFrame, text="Open", width=10, command=lambda: self.students[self.studentView.get(self.studentView.curselection()[0])].open_file())
         openButton.grid(column=0, columnspan=2, row=3)
 
     def add_student(self):
+        """
+        Add a new student to the folder as well as the app.
+        :return: None
+        """
 
         file = filedialog.askopenfilename(initialdir="/", title="Select file",
                                                         filetypes=(("csv files", "*.csv"),
@@ -178,6 +183,16 @@ class MainWindow():
                     self.studentView.insert(END, student.get_student_name())
                 else:
                     Prompt(self, "Incorrect Format", "The format of the file is incorrect.")
+
+    def delete_student(self):
+        """
+        delete the student from the folder as well as the app.
+        :return: None
+        """
+        name = self.studentView.get(self.studentView.curselection())
+        self.students[name].delete_file()
+        del self.students[name]
+        self.studentView.delete(self.studentView.curselection())
 
     def closeWindow(self):
         '''
