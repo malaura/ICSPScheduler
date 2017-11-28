@@ -59,10 +59,10 @@ class MainWindow():
             return
 
         menu = Menu(self.root)
-        # Use a different image if the sys platform is a Mac
         if sys.platform == 'darwin':
             self.root.maxsize(height=350, width=self.width+400)
             self.root.minsize(height=300, width=self.width+200)
+
         self.root.config(menu=menu)
         filemenu = Menu(menu)
         menu.add_cascade(label="File", menu=filemenu)
@@ -140,6 +140,14 @@ class MainWindow():
             for request in MainCalendar.load_all_requests():
                 if button['text'].strip()+"/"+str(self.currentYear) == request:
                     button.configure(style="Blue.TButton", command= lambda request=request: self.viewPrompt(request))
+
+        if sys.platform == 'darwin':
+            image = PhotoImage(file="LogoMac.gif")
+        else:
+            image = PhotoImage(file="Logo.gif")
+        logo = Label(self.centralFrame, image=image, height=50, width=200)
+        logo.image = image
+        logo.grid(row=8, column=0, columnspan=3, rowspan=2, pady=(20,0))
 
         # Initialize right frame widgets
         studentLabel = Label(self.rightFrame, text="Students", background="gray90")
