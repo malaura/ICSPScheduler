@@ -154,7 +154,7 @@ class MainWindow():
         self.studentView.grid(row=1, column=0, padx=5, columnspan=2)
         addButton = ttk.Button(self.rightFrame, text="+", width=5, command = self.add_student)
         addButton.grid(row=2, column=0, sticky=E)
-        removeButton = ttk.Button(self.rightFrame, text="-", width=5, command = lambda: messagebox.askokcancel("Confirmation", "Do you want to delete %s?"%self.studentView.get(self.studentView.curselection()), command= self.delete_student()))
+        removeButton = ttk.Button(self.rightFrame, text="-", width=5, command = (lambda: self.delete_student() if messagebox.askokcancel("Confirmation", "Do you want to delete %s?"%self.studentView.get(self.studentView.curselection())) else False))
         removeButton.grid(row=2, column=1, sticky=W)
         openButton = ttk.Button(self.rightFrame, text="Open", width=10, command=lambda: self.students[self.studentView.get(self.studentView.curselection()[0])].open_file())
         openButton.grid(column=0, columnspan=2, row=3)
