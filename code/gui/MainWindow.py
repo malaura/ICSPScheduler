@@ -85,7 +85,7 @@ class MainWindow():
         deleteButton.grid(row=3, column=2, sticky=W)
 
         allRequests = MainCalendar.load_all_requests()
-        for request in allRequests:
+        for request in sorted(allRequests):
             self.requestView.insert(END, request)
 
         # Initalize central frame widgets
@@ -139,7 +139,7 @@ class MainWindow():
         self.studentView = Listbox(self.rightFrame, height=17, width=20, yscrollcommand=requestScroll.set, selectmode=SINGLE)
         studentScroll.config(command=self.studentView.yview)
         studentScroll.grid(row=1, column=2, sticky="NS")
-        for student in self.students:
+        for student in sorted(self.students):
             self.studentView.insert(END, student)
 
         self.studentView.grid(row=1, column=0, padx=5, columnspan=2)
@@ -155,21 +155,21 @@ class MainWindow():
         file = filedialog.askopenfilename(initialdir="/", title="Select file",
                                                         filetypes=(("csv files", "*.csv"),
                                                                    ("all files", "*.*")))
-        list_name = os.listdir('Students')
-        file_name = file.strip().split('/')[-1]
-        if file_name in list_name:
-            Prompt(self, "Invalid file name", "A file with that name already exists, please choose a new name")
-
-        else:
-            student = Student(file)
-            if student.get_validation():
-                del student
-                shutil.move(file, os.path.join('Students', file_name))
-                student = Student(os.path.join('Students', file_name))
-                self.students[student.get_student_name()] = student
-                self.studentView.insert(END, student.get_student_name())
+        if file != "":
+            list_name = os.listdir('Students')
+            file_name = file.strip().split('/')[-1]
+            if file_name in list_name:
+                Prompt(self, "Invalid file name", "A file with that name already exists, please choose a new name")
             else:
-                Prompt(self, "Incorrect Format", "The format of the file is incorrect.")
+                student = Student(file)
+                if student.get_validation():
+                    del student
+                    shutil.move(file, os.path.join('Students', file_name))
+                    student = Student(os.path.join('Students', file_name))
+                    self.students[student.get_student_name()] = student
+                    self.studentView.insert(END, student.get_student_name())
+                else:
+                    Prompt(self, "Incorrect Format", "The format of the file is incorrect.")
 
     def closeWindow(self):
         '''
