@@ -158,6 +158,7 @@ class MainWindow():
         list_name = os.listdir('Students')
         file_name = file.strip().split('/')[-1]
         if file_name in list_name:
+            Prompt(self, "Invalid file name", "A file with that name already exists, please choose a new name")
             pass ####################### Need a prompt to tell user there has been a file with the same name
         else:
 
@@ -167,6 +168,7 @@ class MainWindow():
                 self.students[student.get_student_name()] = student
                 self.studentView.insert(END, student.get_student_name())
             else:
+                Prompt(self, "Incorrect Format", "The format of the file is incorrect.")
                 pass ############ Need a prompt to tell user the format of the file is not correct
 
 
