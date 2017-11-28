@@ -32,12 +32,9 @@ class MainWindow():
         self.students = MainCalendar.load_all_student()
         self.requestWindowOpen = False
         self.promptWindowOpen = False
-        #self.test = Requests()
-        #self.req = self.test.Request("Syd", "01/01/2017", "12:00", "13:00", "00:05", "00:05")
-        #self.test.add_request(self.req)
         self.requests = Requests()
+
         self.initializeUI()
-        #self.prompt = Prompt(self, "test", "hello word")
 
     def initializeUI(self):
         '''
@@ -75,22 +72,18 @@ class MainWindow():
         requestScroll.config(command=self.requestView.yview)
         requestScroll.grid(row=1, column=0, sticky="NS")
         self.requestView.grid(row=1, column=1, padx=5, columnspan=3)
-        viewButton = ttk.Button(self.leftFrame, text="View", width=5, command=self.viewPrompt)
-        viewButton.grid(row=2, column=1, sticky=W)
-        editButton = ttk.Button(self.leftFrame, text="Edit", width=5, command=self.editPrompt)
+        viewButton = ttk.Button(self.leftFrame, text="View", width=7, command=self.viewPrompt)
+        viewButton.grid(row=2, column=1, sticky=E)
+        editButton = ttk.Button(self.leftFrame, text="Edit", width=7, command=self.editPrompt)
         editButton.grid(row=2, column=2, sticky=W)
-        createButton = ttk.Button(self.leftFrame, text="Create", width=5, command=self.createNewPrompt)
-        createButton.grid(column=1, row=3, sticky=W)
-        deleteButton = ttk.Button(self.leftFrame, text="Delete", width=5, command=None)
+        createButton = ttk.Button(self.leftFrame, text="Create", width=7, command=self.createNewPrompt)
+        createButton.grid(column=1, row=3, sticky=E)
+        deleteButton = ttk.Button(self.leftFrame, text="Delete", width=7, command=None)
         deleteButton.grid(row=3, column=2, sticky=W)
 
         allRequests = MainCalendar.load_all_requests()
         for request in allRequests:
-            print(allRequests)
-            print(request)
-            print(allRequests[request][0].get_name())
             self.requestView.insert(END, request)
-            #print(allRequests[request].get_name)
 
         # Initalize central frame widgets
         appHighlightFont = font.Font(family='Helvetica', size=14, weight='bold')
@@ -101,22 +94,16 @@ class MainWindow():
         rightButton = ttk.Button(self.centralFrame, text=">", width=5, command=self.nextMonth)
         rightButton.grid(column=6, row=8, sticky=W, pady=5)
 
-
-
         days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Satuday"]
-        count = 0
-        for day in days:
-            dayLabel = Label(self.centralFrame, text=day, background="gray90")
-            dayLabel.grid(row=1, column=count)
-            count += 1
+        for i in range(len(days)):
+            dayLabel = Label(self.centralFrame, text=days[i], background="gray90")
+            dayLabel.grid(row=1, column=i)
 
-        count = 1
         for i in range(6):
             for j in range(7):
                 dayButton = ttk.Button(self.centralFrame, text="\n")
                 dayButton.grid(row=i+2, column=j)
                 self.buttons.append(dayButton)
-                count += 1
 
         index = 0
         for day in self.calendar.itermonthdays(self.currentYear, self.currentMonth):
@@ -136,7 +123,6 @@ class MainWindow():
 
         style = ttk.Style()
         style.configure("Blue.TButton", foreground="blue")
-
         for button in self.buttons:
             button.configure(style="default.TButton")
             for request in MainCalendar.load_all_requests():
@@ -182,7 +168,6 @@ class MainWindow():
         '''
         if self.requestWindowOpen:
             return
-        print(date)
         # Initialize labels
         self.prompt = Toplevel(self.root)
         self.prompt.protocol("WM_DELETE_WINDOW", self.closeWindow)
@@ -300,6 +285,7 @@ class MainWindow():
 
         if self.requestWindowOpen:
             return
+
         if request == None:
             try:
                 selectedRequest = self.requestView.get(self.requestView.curselection()[0])
@@ -308,10 +294,6 @@ class MainWindow():
         else:
             selectedRequest = request
 
-        if selectedRequest == None:
-            return
-
-        print(request)
         allRequests = MainCalendar.load_all_requests()
         selectedRequest = allRequests[selectedRequest][0]
         self.prompt = Toplevel(self.root)
@@ -497,7 +479,6 @@ class MainWindow():
         confirmButton.grid(row=12, column=2, sticky="E", columnspan=2, padx=5, pady=(0,5))
         self.requestWindowOpen = True
 
-
     def validateFields(self):
         '''
         Validates the fields in creating a new request.
@@ -563,10 +544,8 @@ class MainWindow():
                   "0:"+str(self.bufferEndInput.get()))
 
         self.availableStudents = MainCalendar.find_available_students(self.students, self.request)
-        print(self.availableStudents)
         self.availableView.delete(0, END)
         for student in self.availableStudents:
-            print(student)
             self.availableView.insert(END, student)
 
 
@@ -607,9 +586,6 @@ class MainWindow():
                   "0:"+str(self.bufferEndInput.get()))
 
         studentSchedules = MainCalendar.load_all_student()
-        print(studentSchedules)
-        print(self.request)
-        print(type(self.request))
         self.requests.add_request(self.request)
         for student in self.assignedView.get(0, END):
             MainCalendar.set_student_to_request(studentSchedules[student], self.request)
@@ -677,6 +653,5 @@ class MainWindow():
             for request in MainCalendar.load_all_requests():
                 if button['text'].strip()+"/"+str(self.currentYear) == request:
                     button.configure(style="Blue.TButton", command= lambda request=request: self.viewPrompt(request))
-
 
         self.monthLabel.configure(text=self.months[self.currentMonth-1]+" "+str(self.currentYear))
