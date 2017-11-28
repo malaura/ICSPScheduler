@@ -1,6 +1,7 @@
 import csv
 import os
 import shutil
+import sys
 from datetime import datetime
 
 from intervaltree import IntervalTree, Interval
@@ -31,9 +32,9 @@ class Student:
         Open file with default application
         :return: None
         """
-        try:
+        if sys.platform == 'darwin':
             os.system("open " + self.directory)
-        except:
+        else:
             os.system("start " + self.directory)
 
     def load(self):
@@ -270,4 +271,3 @@ class Student:
         except:
             return False
         return True
-
