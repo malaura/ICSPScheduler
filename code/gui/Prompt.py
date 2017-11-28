@@ -56,3 +56,5 @@ class Prompt():
 
         self.parent.promptWindowOpen = False
         self.prompt.destroy()
+        if self.title == "Incorrect Student File":
+            self.parent.root.destroy()

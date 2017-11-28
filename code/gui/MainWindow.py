@@ -49,6 +49,14 @@ class MainWindow():
         args: None
         returns: None
         '''
+
+        if isinstance(self.students, list):
+            badFiles = []
+            for i in range(0,len(self.students), 2):
+                badFiles.append(self.students[i])
+            Prompt(self, "Incorrect Student File", "The following files are incorrectly formatted: "+", ".join(badFiles)+".\n Please correct the files and restart the program")
+            return
+
         menu = Menu(self.root)
         # Use a different image if the sys platform is a Mac
         if sys.platform == 'darwin':
