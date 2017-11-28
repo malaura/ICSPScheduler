@@ -1,6 +1,10 @@
+import shutil
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, filedialog
 from tkinter import font
+
+import os
+
 from .Prompt import Prompt
 from ..MainCalendar import MainCalendar
 import calendar
@@ -48,7 +52,6 @@ class MainWindow():
         args: None
         returns: None
         '''
-        print(MainCalendar.load_all_requests())
         menu = Menu(self.root)
         # Use a different image if the sys platform is a Mac
         if sys.platform == 'darwin':
@@ -86,9 +89,6 @@ class MainWindow():
 
         allRequests = MainCalendar.load_all_requests()
         for request in allRequests:
-            print(allRequests)
-            print(request)
-            print(allRequests[request][0].get_name())
             self.requestView.insert(END, request)
             #print(allRequests[request].get_name)
 
@@ -150,17 +150,38 @@ class MainWindow():
         studentLabel = Label(self.rightFrame, text="Students", background="gray90")
         studentLabel.grid(row=0, column=0, columnspan=2)
         studentScroll = Scrollbar(self.rightFrame, orient=VERTICAL)
-        studentView = Listbox(self.rightFrame, height=17, width=20, yscrollcommand=requestScroll.set, selectmode=SINGLE)
-        studentScroll.config(command=studentView.yview)
+        self.studentView = Listbox(self.rightFrame, height=17, width=20, yscrollcommand=requestScroll.set, selectmode=SINGLE)
+        studentScroll.config(command=self.studentView.yview)
         studentScroll.grid(row=1, column=2, sticky="NS")
         for student in self.students:
-            studentView.insert(END, student)
+            self.studentView.insert(END, student)
 
-        studentView.grid(row=1, column=0, padx=5, columnspan=2)
-        addButton = ttk.Button(self.rightFrame, text="+", width=5)
+        self.studentView.grid(row=1, column=0, padx=5, columnspan=2)
+        addButton = ttk.Button(self.rightFrame, text="+", width=5, command = self.add_student)
         addButton.grid(row=2, column=0, sticky=E)
         removeButton = ttk.Button(self.rightFrame, text="-", width=5)
         removeButton.grid(row=2, column=1, sticky=W)
+
+    def add_student(self):
+
+        file = filedialog.askopenfilename(initialdir="/", title="Select file",
+                                                        filetypes=(("csv files", "*.csv"),
+                                                                   ("all files", "*.*")))
+        list_name = os.listdir('Students')
+        file_name = file.strip().split('/')[-1]
+        if file_name in list_name:
+            pass ####################### Need a prompt to tell user there has been a file with the same name
+        else:
+
+            student = Student(os.path.join('Students', file_name))
+            if student.get_validation():
+                shutil.move(file, os.path.join('Students', file_name))
+                self.students[student.get_student_name()] = student
+                self.studentView.insert(END, student.get_student_name())
+            else:
+                pass ############ Need a prompt to tell user the format of the file is not correct
+
+
 
     def closeWindow(self):
         '''
@@ -183,7 +204,6 @@ class MainWindow():
         '''
         if self.requestWindowOpen:
             return
-        print(date)
         # Initialize labels
         self.prompt = Toplevel(self.root)
         self.prompt.protocol("WM_DELETE_WINDOW", self.closeWindow)
@@ -312,7 +332,6 @@ class MainWindow():
         if selectedRequest == None:
             return
 
-        print(request)
         allRequests = MainCalendar.load_all_requests()
         selectedRequest = allRequests[selectedRequest][0]
         self.prompt = Toplevel(self.root)
@@ -564,10 +583,8 @@ class MainWindow():
                   "0:"+str(self.bufferEndInput.get()))
 
         self.availableStudents = MainCalendar.find_available_students(self.students, self.request)
-        print(self.availableStudents)
         self.availableView.delete(0, END)
         for student in self.availableStudents:
-            print(student)
             self.availableView.insert(END, student)
 
 
@@ -608,9 +625,6 @@ class MainWindow():
                   "0:"+str(self.bufferEndInput.get()))
 
         studentSchedules = MainCalendar.load_all_student()
-        print(studentSchedules)
-        print(self.request)
-        print(type(self.request))
         self.requests.add_request(self.request)
         for student in self.assignedView.get(0, END):
             MainCalendar.set_student_to_request(studentSchedules[student], self.request)
