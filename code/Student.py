@@ -241,7 +241,6 @@ class Student:
         :param date_text - string
         :return: boolean - true if it is in the correct format false if otherwise
         """
-        print('validate_date')
         try:
             datetime.strptime(date_text, '%m/%d/%Y')
         except ValueError:
