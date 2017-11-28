@@ -171,10 +171,11 @@ class MainWindow():
         if file_name in list_name:
             pass ####################### Need a prompt to tell user there has been a file with the same name
         else:
-
-            student = Student(os.path.join('Students', file_name))
+            student = Student(file)
             if student.get_validation():
+                del student
                 shutil.move(file, os.path.join('Students', file_name))
+                student = Student(os.path.join('Students', file_name))
                 self.students[student.get_student_name()] = student
                 self.studentView.insert(END, student.get_student_name())
             else:
