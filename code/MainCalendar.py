@@ -27,8 +27,7 @@ class MainCalendar():
         list_of_wrong_name = []
         for name in list_name:
             directory_of_one_student = os.path.join('Students', name)
-            print(directory_of_one_student)
-            student_name = name[:3]
+            student_name = name[:-4]
             student = Student(directory_of_one_student)
             if student.get_validation():
                 dictionary[student_name] = student
@@ -243,7 +242,6 @@ class MainCalendar():
         date = request.get_date()
         mon, day, year = request.get_date().split('/')
         weekly_date = calendar.day_name[datetime.datetime(int(year), int(mon), int(day)).weekday()]
-        print(weekly_date)
         for student in students.keys():
             if date in students[student].get_dictionary_of_time_interval():
                 interval = students[student].get_dictionary_of_time_interval()[date]
