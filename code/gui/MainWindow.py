@@ -95,7 +95,7 @@ class MainWindow():
 
         allRequests = MainCalendar.load_all_requests()
         for request in sorted(allRequests):
-            self.requestView.insert(END, request)
+            self.requestView.insert(END, allRequests[request][-1].get_name())
 
         # Initalize central frame widgets
         appHighlightFont = font.Font(family='Helvetica', size=14, weight='bold')
