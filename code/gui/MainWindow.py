@@ -95,7 +95,7 @@ class MainWindow():
 
         allRequests = MainCalendar.load_all_requests()
         for request in sorted(allRequests):
-            self.requestView.insert(END, allRequests[request][-1].get_name())
+            self.requestView.insert(END, request)
 
         # Initalize central frame widgets
         appHighlightFont = font.Font(family='Helvetica', size=14, weight='bold')
@@ -361,7 +361,7 @@ class MainWindow():
             selectedRequest = request
 
         allRequests = MainCalendar.load_all_requests()
-        selectedRequest = allRequests[selectedRequest][0]
+        selectedRequest = allRequests[selectedRequest][-1]
         self.prompt = Toplevel(self.root)
         self.prompt.protocol("WM_DELETE_WINDOW", self.closeWindow)
         self.prompt.minsize(width=200, height=300)
