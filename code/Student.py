@@ -187,10 +187,10 @@ class Student:
             with open(os.path.join('Students', 'temp.csv'), 'w', newline='') as new_file:
                 csv_writer = csv.DictWriter(new_file, fieldnames=self.fieldnames, delimiter=',')
                 csv_writer.writeheader()
-                request = {'Information': request.get_name(), 'Start': request.get_start_time(),
+                old_request = {'Information': request.get_name(), 'Start': request.get_start_time(),
                            'End': request.get_end_time(), 'Date': request.get_date()}
                 for line in csv_reader:
-                    if line != request:
+                    if line != old_request:
                         csv_writer.writerow(line)
 
         shutil.move(os.path.join('Students', 'temp.csv'), self.directory)

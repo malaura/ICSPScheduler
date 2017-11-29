@@ -90,7 +90,7 @@ class MainWindow():
         editButton.grid(row=2, column=2, sticky=W)
         createButton = ttk.Button(self.leftFrame, text="Create", width=7, command=self.createNewPrompt)
         createButton.grid(column=1, row=3, sticky=E)
-        deleteButton = ttk.Button(self.leftFrame, text="Delete", width=7, command=None)
+        deleteButton = ttk.Button(self.leftFrame, text="Delete", width=7, command=self.delete_request)
         deleteButton.grid(row=3, column=2, sticky=W)
 
         allRequests = MainCalendar.load_all_requests()
@@ -167,6 +167,27 @@ class MainWindow():
         logo = Label(self.rightFrame, image=image, height=50, width=50)
         logo.image = image
         logo.grid(row=4, column=1, columnspan=2, sticky=NE)
+
+    def delete_request(self):
+        """
+        Delete an existing request.
+        :return: None
+        """
+        try:
+            request_name = self.requestView.get(self.requestView.curselection())
+            if messagebox.askokcancel("Confirmation",
+                                      "Do you want to delete %s?" % self.requestView.get(
+                                          self.requestView.curselection())):
+
+                self.requestView.delete(self.requestView.curselection())
+                single_request = MainCalendar.load_all_requests()
+                all_request = Requests()
+                for student in self.students:
+                    if self.students[student].check_request(single_request[request_name][0].get_name()):
+                        self.students[student].delete_request(single_request[request_name][0])
+                all_request.delete_request(single_request[request_name][0])
+        except :
+            pass
 
     def add_student(self):
         """
