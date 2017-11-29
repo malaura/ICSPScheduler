@@ -121,7 +121,7 @@ class MainWindow():
             month = "0" + str(self.currentMonth)
         else:
             month = str(self.currentMonth)
-            
+
         index = 0
         for day in self.calendar.itermonthdays(self.currentYear, self.currentMonth):
             curButton = self.buttons[index]
@@ -300,18 +300,22 @@ class MainWindow():
         self.endMinuteInput = ttk.Combobox(self.prompt, width=8, state="readonly")
         self.endMinuteInput.grid(row=5, column=2, sticky="W")
         self.endMinuteInput['values'] = times
-        self.bufferStartInput = ttk.Combobox(self.prompt, width=27, state="readonly")
-        self.bufferStartInput.grid(row=6, column=1, columnspan=2)
+        self.bufferStartInput = ttk.Combobox(self.prompt, width=15, state="readonly")
+        self.bufferStartInput.grid(row=6, column=1, columnspan=1, sticky="E")
         bufferList = []
         for i in range(0, 65, 5):
             if i < 10:
                 bufferList.append("0"+str(i))
             else:
                 bufferList.append(str(i))
+        bsMinutes = Label(self.prompt, text="minutes")
+        bsMinutes.grid(column=2, row=6, sticky="W")
         self.bufferStartInput['values'] = bufferList
-        self.bufferEndInput = ttk.Combobox(self.prompt, width=27, state="readonly")
-        self.bufferEndInput.grid(row=7, column=1, columnspan=2)
+        self.bufferEndInput = ttk.Combobox(self.prompt, width=15, state="readonly")
+        self.bufferEndInput.grid(row=7, column=1, columnspan=1, sticky="E")
         self.bufferEndInput['values'] = bufferList
+        beMinutes = Label(self.prompt, text="minutes")
+        beMinutes.grid(column=2, row=7, sticky="W")
 
         #Initalize list views
         assignedLabel = ttk.Label(self.prompt, text="Assigned")
