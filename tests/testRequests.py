@@ -44,3 +44,13 @@ class TestRequests(unittest.TestCase):
         get_actual_end_time = request.get_actual_end_time()
         self.assertEqual(get_actual_end_time, 2.0)
 
+    def test_request_get_dictionary(self):
+        requests = Requests()
+        self.assertEqual(len(requests.get_dictionary()), 0)
+
+    #def test_add_request(self):
+     #   request = Requests.Request('test', '11/25/2017', '00:00', '02:00', '00:00', '00:00')
+     #   requests = Requests()
+     #   requests.add_request(request)
+     #   self.assertEqual(len(requests.get_dictionary()), 1)
+
