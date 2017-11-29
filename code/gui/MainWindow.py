@@ -602,6 +602,12 @@ class MainWindow():
         if self.validateFields() == False:
             return
 
+        date = self.monthInput.get()+"/"+self.dayInput.get()+"/"+str(self.currentYear)
+        for request in MainCalendar.load_all_requests():
+            if request == date:
+                Prompt(self, "Invalid Date", "There is an existing request on this date. Please select a new date.")
+                return
+
         self.request = self.requests.Request(self.nameInput.get(),
                   self.monthInput.get()+"/"+self.dayInput.get()+"/"+str(self.currentYear),
                   str(self.startHourInput.get())+":"+str(self.startMinuteInput.get()),
