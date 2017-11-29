@@ -144,7 +144,7 @@ class MainWindow():
                     button.configure(style="Blue.TButton", command= lambda request=request: self.viewPrompt(request))
 
         image = PhotoImage(file="icon.gif")
-        logo = Label(self.centralFrame, image=image, height=50, width=50)
+        logo = Label(self.centralFrame, image=image, height=50, width=50, background= "gray90")
         logo.image = image
         logo.grid(row=8, column=0, columnspan=2, sticky=W, pady=5)
 
