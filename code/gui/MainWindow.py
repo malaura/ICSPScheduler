@@ -308,13 +308,13 @@ class MainWindow():
                 bufferList.append("0"+str(i))
             else:
                 bufferList.append(str(i))
-        bsMinutes = Label(self.prompt, text="minutes")
+        bsMinutes = Label(self.prompt, text="minutes", background="gray90")
         bsMinutes.grid(column=2, row=6, sticky="W")
         self.bufferStartInput['values'] = bufferList
         self.bufferEndInput = ttk.Combobox(self.prompt, width=15, state="readonly")
         self.bufferEndInput.grid(row=7, column=1, columnspan=1, sticky="E")
         self.bufferEndInput['values'] = bufferList
-        beMinutes = Label(self.prompt, text="minutes")
+        beMinutes = Label(self.prompt, text="minutes", background="gray90")
         beMinutes.grid(column=2, row=7, sticky="W")
 
         #Initalize list views
