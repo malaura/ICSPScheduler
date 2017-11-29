@@ -127,7 +127,7 @@ class MainWindow():
         for day in self.calendar.itermonthdays(self.currentYear, self.currentMonth):
             curButton = self.buttons[index]
             if day == 0:
-                curButton.configure(text="\n")
+                curButton.configure(text="\n", command="")
             else:
                 if day < 10:
                     curButton.configure(text="0"+str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+"0"+str(day)))
@@ -637,11 +637,15 @@ class MainWindow():
 
         days = []
         for day in self.calendar.itermonthdays(self.currentYear, self.currentMonth):
-            days.append(str(day))
+            if day < 10:
+                days.append("0"+str(day))
+            else:
+                days.append(str(day))
 
         if date.split("/")[1] not in days:
             Prompt(self, "Invalid Date", "The day selected is not valid for the month selected.")
             return
+
 
         self.request = self.requests.Request(self.nameInput.get(),
                   self.monthInput.get()+"/"+self.dayInput.get()+"/"+str(self.currentYear),
@@ -746,7 +750,7 @@ class MainWindow():
         for day in self.calendar.itermonthdays(self.currentYear, self.currentMonth):
             curButton = self.buttons[index]
             if day == 0:
-                curButton.configure(text=" "+"\n")
+                curButton.configure(text=" "+"\n", command="")
             else:
                 if day < 10:
                     curButton.configure(text="0"+str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+"0"+str(day)))
