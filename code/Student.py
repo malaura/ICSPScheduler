@@ -161,6 +161,7 @@ class Student:
             self.dictionary_of_time_interval[request.get_date()][
             float(request.get_start_time().replace(':', '.')):float(request.get_end_time().replace(':', '.'))] = True
 
+
     def check_request(self, name):
         """
         Checks if the request is assigned to this student
@@ -194,17 +195,7 @@ class Student:
                         csv_writer.writerow(line)
 
         shutil.move(os.path.join('Students', 'temp.csv'), self.directory)
-
-        # dictionary_of_schedule
-        self.dictionary_of_schedule[request.get_date()].remove([request.get_start_time(), request.get_end_time(), request.get_name()])
-        if self.dictionary_of_schedule[request.get_date()] == []:
-            del self.dictionary_of_schedule[request.get_date()]
-
-        # dictionary_of_time_interval
-        self.dictionary_of_time_interval[request.get_date()].remove(
-            Interval(float(request.get_start_time().replace(':', '.')), float(request.get_end_time().replace(':', '.')), True))
-        if self.dictionary_of_time_interval[request.get_date()] == IntervalTree():
-            del self.dictionary_of_time_interval[request.get_date()]
+        self.load()
 
     def csv_file_format_validator(self):
         """
