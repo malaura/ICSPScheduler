@@ -61,9 +61,10 @@ class MainWindow():
         menu = Menu(self.root)
         if sys.platform == 'darwin':
             self.root.maxsize(height=361, width=self.width+400)
-            self.root.minsize(height=361, width=self.width+200)
+            self.root.minsize(height=361, width=self.width+150)
 
-        self.root.config(menu=menu)
+        self.root.config(menu=menu, background="gray90")
+
         filemenu = Menu(menu)
         menu.add_cascade(label="File", menu=filemenu)
         filemenu.add_separator()
