@@ -184,6 +184,7 @@ class MainWindow():
                     if self.students[student].check_request(single_request[request_name][0].get_name()):
                         self.students[student].delete_request(single_request[request_name][0])
                 all_request.delete_request(single_request[request_name][0])
+                self.updateCalendar()
         except :
             pass
 
