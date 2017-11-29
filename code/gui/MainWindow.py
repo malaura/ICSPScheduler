@@ -614,6 +614,14 @@ class MainWindow():
                 Prompt(self, "Invalid Date", "There is an existing request on this date. Please select a new date.")
                 return
 
+        days = []
+        for day in self.calendar.itermonthdays(self.currentYear, self.currentMonth):
+            days.append(str(day))
+
+        if date.split("/")[1] not in days:
+            Prompt(self, "Invalid Date", "The day selected is not valid for the month selected.")
+            return
+
         self.request = self.requests.Request(self.nameInput.get(),
                   self.monthInput.get()+"/"+self.dayInput.get()+"/"+str(self.currentYear),
                   str(self.startHourInput.get())+":"+str(self.startMinuteInput.get()),
