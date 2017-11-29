@@ -146,7 +146,7 @@ class MainWindow():
         studentLabel = Label(self.rightFrame, text="Students", background="gray90")
         studentLabel.grid(row=0, column=0, columnspan=2)
         studentScroll = Scrollbar(self.rightFrame, orient=VERTICAL)
-        self.studentView = Listbox(self.rightFrame, height=17, width=20, yscrollcommand=requestScroll.set, selectmode=SINGLE)
+        self.studentView = Listbox(self.rightFrame, height=17, width=20, yscrollcommand=studentScroll.set, selectmode=SINGLE)
         studentScroll.config(command=self.studentView.yview)
         studentScroll.grid(row=1, column=2, sticky="NS")
         for student in sorted(self.students):
@@ -318,10 +318,14 @@ class MainWindow():
         availableScroll = Scrollbar(self.prompt, orient=VERTICAL)
         self.assignedView = Listbox(self.prompt, width=15, height=10, selectmode=SINGLE, yscrollcommand=assignedScroll.set)
         self.assignedView.grid(row=9, column=0, padx=(5,0), pady=5, sticky="W", rowspan=2)
+        assignedScroll.config(command=self.assignedView.yview)
+        assignedScroll.grid(row=9, column=1, sticky="NSW", rowspan=2)
         availableLabel = ttk.Label(self.prompt, text="Available")
         availableLabel.grid(row=8, column=2, pady=5)
         self.availableView = Listbox(self.prompt, width=15, height=10, yscrollcommand=availableScroll.set, selectmode=SINGLE)
         self.availableView.grid(row=9, column=2, rowspan=2, padx=(0,5), pady=5, sticky="E")
+        availableScroll.config(command=self.availableView.yview)
+        availableScroll.grid(row=9, column=1, sticky="NSE", rowspan=2)
 
         leftButton = ttk.Button(self.prompt, text="<", command=self.assignStudent)
         leftButton.grid(row=9, column=1, sticky='S')
