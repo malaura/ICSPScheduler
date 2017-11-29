@@ -141,13 +141,6 @@ class MainWindow():
                 if button['text'].strip()+"/"+str(self.currentYear) == request:
                     button.configure(style="Blue.TButton", command= lambda request=request: self.viewPrompt(request))
 
-        if sys.platform == 'darwin':
-            image = PhotoImage(file="LogoMac.gif")
-        else:
-            image = PhotoImage(file="Logo.gif")
-        logo = Label(self.centralFrame, image=image, height=50, width=200)
-        logo.image = image
-        logo.grid(row=8, column=0, columnspan=3, rowspan=2, pady=(20,0))
 
         # Initialize right frame widgets
         studentLabel = Label(self.rightFrame, text="Students", background="gray90")
@@ -166,6 +159,12 @@ class MainWindow():
         removeButton.grid(row=2, column=1, sticky=W)
         openButton = ttk.Button(self.rightFrame, text="Open", width=10, command=lambda: self.students[self.studentView.get(self.studentView.curselection()[0])].open_file())
         openButton.grid(column=0, columnspan=2, row=3)
+
+
+        image = PhotoImage(file="icon.gif")
+        logo = Label(self.rightFrame, image=image, height=50, width=50)
+        logo.image = image
+        logo.grid(row=4, column=1, columnspan=2, sticky=NE)
 
     def add_student(self):
         """
