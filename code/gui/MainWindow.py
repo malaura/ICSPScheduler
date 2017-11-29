@@ -60,8 +60,8 @@ class MainWindow():
 
         menu = Menu(self.root)
         if sys.platform == 'darwin':
-            self.root.maxsize(height=350, width=self.width+400)
-            self.root.minsize(height=300, width=self.width+200)
+            self.root.maxsize(height=361, width=self.width+400)
+            self.root.minsize(height=361, width=self.width+200)
 
         self.root.config(menu=menu)
         filemenu = Menu(menu)
@@ -184,6 +184,7 @@ class MainWindow():
                     if self.students[student].check_request(single_request[request_name][0].get_name()):
                         self.students[student].delete_request(single_request[request_name][0])
                 all_request.delete_request(single_request[request_name][0])
+                self.updateCalendar()
         except :
             pass
 
