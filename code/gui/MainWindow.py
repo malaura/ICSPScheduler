@@ -761,3 +761,8 @@ class MainWindow():
                     button.configure(style="Blue.TButton", command= lambda request=request: self.viewPrompt(request))
 
         self.monthLabel.configure(text=self.months[self.currentMonth-1]+" "+str(self.currentYear))
+
+        allRequests = MainCalendar.load_all_requests()
+        self.requestView.delete(0, END)
+        for request in sorted(allRequests):
+            self.requestView.insert(END, request)
