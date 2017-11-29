@@ -117,28 +117,30 @@ class MainWindow():
                 dayButton.grid(row=i+2, column=j)
                 self.buttons.append(dayButton)
 
+        if self.currentMonth < 10:
+            month = "0" + str(self.currentMonth)
+        else:
+            month = str(self.currentMonth)
+            
         index = 0
         for day in self.calendar.itermonthdays(self.currentYear, self.currentMonth):
             curButton = self.buttons[index]
-            if self.currentMonth < 10:
-                month = "0" + str(self.currentMonth)
-            else:
-                month = str(self.currentMonth)
             if day == 0:
                 curButton.configure(text="\n")
             else:
                 if day < 10:
-                    curButton.configure(text=month+"/"+"0"+str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+"0"+str(day)))
+                    curButton.configure(text="0"+str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+"0"+str(day)))
                 else:
-                    curButton.configure(text=month+"/"+str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+str(day)))
+                    curButton.configure(text=str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+str(day)))
             index += 1
 
         style = ttk.Style()
         style.configure("Blue.TButton", foreground="blue")
+
         for button in self.buttons:
             button.configure(style="default.TButton")
             for request in MainCalendar.load_all_requests():
-                if button['text'].strip()+"/"+str(self.currentYear) == request:
+                if month+"/"+button['text'].strip()+"/"+str(self.currentYear) == request:
                     button.configure(style="Blue.TButton", command= lambda request=request: self.viewPrompt(request))
 
 
@@ -703,19 +705,20 @@ class MainWindow():
         for button in self.buttons:
             button.config(text=" "+"\n")
 
+        if self.currentMonth < 10:
+            month = "0" + str(self.currentMonth)
+        else:
+            month = str(self.currentMonth)
+
         for day in self.calendar.itermonthdays(self.currentYear, self.currentMonth):
             curButton = self.buttons[index]
-            if self.currentMonth < 10:
-                month = "0" + str(self.currentMonth)
-            else:
-                month = str(self.currentMonth)
             if day == 0:
                 curButton.configure(text=" "+"\n")
             else:
                 if day < 10:
-                    curButton.configure(text=month+"/"+"0"+str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+"0"+str(day)))
+                    curButton.configure(text="0"+str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+"0"+str(day)))
                 else:
-                    curButton.configure(text=month+"/"+str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+str(day)))
+                    curButton.configure(text=str(day)+"\n", command=lambda day=day: self.createNewPrompt(month+"/"+str(day)))
             index += 1
 
         style = ttk.Style()
@@ -723,7 +726,7 @@ class MainWindow():
         for button in self.buttons:
             button.configure(style="default.TButton")
             for request in MainCalendar.load_all_requests():
-                if button['text'].strip()+"/"+str(self.currentYear) == request:
+                if month+"/"+button['text'].strip()+"/"+str(self.currentYear) == request:
                     button.configure(style="Blue.TButton", command= lambda request=request: self.viewPrompt(request))
 
         self.monthLabel.configure(text=self.months[self.currentMonth-1]+" "+str(self.currentYear))
