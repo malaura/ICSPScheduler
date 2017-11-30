@@ -165,7 +165,7 @@ class MainWindow():
         self.studentView.grid(row=1, column=0, padx=5, columnspan=2)
         addButton = ttk.Button(self.rightFrame, text="Import", width=7, command = self.add_student)
         addButton.grid(row=2, column=0, sticky=E)
-        removeButton = ttk.Button(self.rightFrame, text="Delete", width=7, command = (lambda: self.delete_student() if messagebox.askokcancel("Confirmation", "Do you want to delete %s?"%self.studentView.get(self.studentView.curselection())) else False))
+        removeButton = ttk.Button(self.rightFrame, text="Delete", width=7, command = self.delete_student)
         removeButton.grid(row=2, column=1, sticky=W)
         openButton = ttk.Button(self.rightFrame, text="Open", width=10, command=lambda: self.students[self.studentView.get(self.studentView.curselection()[0])].open_file())
         openButton.grid(column=0, columnspan=2, row=3)
@@ -222,10 +222,15 @@ class MainWindow():
         delete the student from the folder as well as the app.
         :return: None
         """
-        name = self.studentView.get(self.studentView.curselection())
-        self.students[name].delete_file()
-        del self.students[name]
-        self.studentView.delete(self.studentView.curselection())
+        try:
+            name = self.studentView.get(self.studentView.curselection())
+            if messagebox.askokcancel("Confirmation", "Do you want to delete %s?"%self.studentView.get(self.studentView.curselection())):
+                if name != "":
+                    self.students[name].delete_file()
+                    del self.students[name]
+                    self.studentView.delete(self.studentView.curselection())
+        except:
+            pass
 
     def closeWindow(self):
         '''
