@@ -219,15 +219,22 @@ class Student:
         with open(self.directory, 'r') as csv_file:
             csv_reader = csv.reader(csv_file)
             headers = next(csv_reader)
-            if headers[0] != 'Date' and headers[1] != 'Start' and headers[2] != 'End' and headers[3] != 'Information':
-                return False
+            if headers[0] != 'Date' or headers[1] != 'Start' or headers[2] != 'End' or headers[3] != 'Information':
+                return False, "Header wasn't in the correct format"
             for i in csv_reader:
+                if i[3] == '' or i[0] == '' or i[1] == '' or i[2] == '':
+                    return False, "Any grid can't be empty"
                 if not self.validate_date(i[0]):
                     return False, "Date Date wasn't in the correct format"
                 if not self.validate_start_or_end(i[1]):
                     return False, "Start date wasn't in the correct format"
                 if not self.validate_start_or_end(i[2]):
                     return False, "End date wasn't in the correct format"
+                if float(i[1].strip().split(':')[0])>float(i[2].strip().split(':')[0]):
+                    return False, "The start date is earlier than the end date"
+                if float(i[1].strip().split(':')[0]) == float(i[2].strip().split(':')[0]):
+                    if float(i[1].strip().split(':')[1]) > float(i[2].strip().split(':')[1]):
+                        return False, "The start date is earlier than the end date"
         return True, "Format is correct"
 
     @staticmethod
