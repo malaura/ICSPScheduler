@@ -203,25 +203,27 @@ class MainWindow():
         Add a new student to the folder as well as the app.
         :return: None
         """
-
         file = filedialog.askopenfilename(initialdir="/", title="Select file",
                                                         filetypes=(("csv files", "*.csv"),
-                                                                   ("all files", "*.*")))
-        if file != "":
-            list_name = os.listdir('Students')
-            file_name = file.strip().split('/')[-1]
-            if file_name in list_name:
-                Prompt(self, "Invalid file name", "A file with that name already exists, please choose a new name")
-            else:
-                student = Student(file)
-                if student.get_validation():
-                    del student
-                    shutil.copyfile(file, os.path.join('Students', file_name))
-                    student = Student(os.path.join('Students', file_name))
-                    self.students[student.get_student_name()] = student
-                    self.studentView.insert(END, student.get_student_name())
+                                                               ("all files", "*.*")))
+        try:
+            if file != "":
+                list_name = os.listdir('Students')
+                file_name = file.strip().split('/')[-1]
+                if file_name in list_name:
+                    Prompt(self, "Invalid file name", "A file with that name already exists, please choose a new name")
                 else:
-                    Prompt(self, "Incorrect Format", "The format of the file is incorrect.")
+                    student = Student(file)
+                    if student.get_validation():
+                        del student
+                        shutil.copyfile(file, os.path.join('Students', file_name))
+                        student = Student(os.path.join('Students', file_name))
+                        self.students[student.get_student_name()] = student
+                        self.studentView.insert(END, student.get_student_name())
+                    else:
+                        Prompt(self, "Incorrect Format", "The format of the file is incorrect.")
+        except:
+            pass
 
     def delete_student(self):
         """
