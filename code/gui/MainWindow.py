@@ -210,7 +210,7 @@ class MainWindow():
                 student = Student(file)
                 if student.get_validation():
                     del student
-                    shutil.move(file, os.path.join('Students', file_name))
+                    shutil.copyfile(file, os.path.join('Students', file_name))
                     student = Student(os.path.join('Students', file_name))
                     self.students[student.get_student_name()] = student
                     self.studentView.insert(END, student.get_student_name())
