@@ -47,6 +47,13 @@ class Student:
             csv_reader = csv.DictReader(csv_file)
             for line in csv_reader:
                 lis = [line['Start'], line['End'], line['Information']]
+                if line['Date'] not in ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+                                        'Saturday', 'Sunday'):
+                    try:
+                        date_obj = datetime.strptime(line['Date'], '%m/%d/%y')
+                        line['Date'] = datetime.strftime(date_obj, '%m/%d/%Y')
+                    except:
+                        pass
                 try:
                     self.dictionary_of_schedule['%s' % line['Date']].append(lis)
                 except:
@@ -235,11 +242,14 @@ class Student:
         try:
             datetime.strptime(date_text, '%m/%d/%Y')
         except ValueError:
-            if (date_text == 'Monday' or date_text == 'Tuesday' or date_text == 'Wednesday' or date_text == 'Thursday'
-                or date_text == 'Friday' or date_text == 'Saturday' or date_text == 'Sunday'):
-                return True
-            else:
-                return False
+            try:
+                datetime.strptime(date_text, '%m/%d/%y')
+            except ValueError:
+                if (date_text == 'Monday' or date_text == 'Tuesday' or date_text == 'Wednesday' or date_text == 'Thursday'
+                        or date_text == 'Friday' or date_text == 'Saturday' or date_text == 'Sunday'):
+                    return True
+                else:
+                    return False
         return True
 
     @staticmethod
