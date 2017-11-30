@@ -12,7 +12,6 @@ from code.Requests import Requests
 from code.Student import Student
 from datetime import datetime
 
-
 class MainWindow():
     def __init__(self, root):
         '''
@@ -81,7 +80,7 @@ class MainWindow():
         self.rightFrame.grid(row=0, column=2, sticky=NS)
 
         # Initalize left frame widgets
-        requestLabel = Label(self.leftFrame, text="Request", background="gray90")
+        requestLabel = Label(self.leftFrame, text="Requests", background="gray90")
         requestLabel.grid(column=1, row=0, columnspan=2)
         requestScroll = Scrollbar(self.leftFrame, orient=VERTICAL)
         requestScrollHor = Scrollbar(self.leftFrame, orient=HORIZONTAL)
@@ -511,7 +510,6 @@ class MainWindow():
             Prompt(self, "Invalid Date", "The day selected is not valid for the month selected.")
             return
 
-
         self.request = self.requests.Request(self.nameInput.get(),
                   self.monthInput.get()+"/"+self.dayInput.get()+"/"+str(self.currentYear),
                   str(self.startHourInput.get())+":"+str(self.startMinuteInput.get()),
@@ -523,7 +521,6 @@ class MainWindow():
         self.availableView.delete(0, END)
         for student in self.availableStudents:
             self.availableView.insert(END, student)
-
 
     def assignStudent(self):
         '''
@@ -636,4 +633,4 @@ class MainWindow():
         allRequests = MainCalendar.load_all_requests()
         self.requestView.delete(0, END)
         for request in sorted(allRequests):
-            self.requestView.insert(END, request)
+            self.requestView.insert(END, allRequests[request][-1].get_name()+" - "+request)
