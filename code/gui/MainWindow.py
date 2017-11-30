@@ -84,20 +84,23 @@ class MainWindow():
         requestLabel = Label(self.leftFrame, text="Request", background="gray90")
         requestLabel.grid(column=1, row=0, columnspan=2)
         requestScroll = Scrollbar(self.leftFrame, orient=VERTICAL)
-        self.requestView = Listbox(self.leftFrame, height=17, width=20, selectmode=SINGLE, yscrollcommand=requestScroll.set)
+        requestScrollHor = Scrollbar(self.leftFrame, orient=HORIZONTAL)
+        self.requestView = Listbox(self.leftFrame, height=17, width=20, selectmode=SINGLE, yscrollcommand=requestScroll.set, xscrollcommand=requestScrollHor.set)
         requestScroll.config(command=self.requestView.yview)
         requestScroll.grid(row=1, column=0, sticky="NS")
+        requestScrollHor.config(command=self.requestView.xview)
+        requestScrollHor.grid(row=2, column=1, columnspan=2, sticky="EW")
         self.requestView.grid(row=1, column=1, padx=5, columnspan=3)
         viewButton = ttk.Button(self.leftFrame, text="View", width=7, command=self.viewPrompt)
-        viewButton.grid(row=3, column=1, sticky=E)
+        viewButton.grid(row=4, column=1, sticky=E)
         createButton = ttk.Button(self.leftFrame, text="Create", width=14, command=self.createNewPrompt)
-        createButton.grid(column=1, row=2, columnspan=2)
+        createButton.grid(column=1, row=3, columnspan=2)
         deleteButton = ttk.Button(self.leftFrame, text="Delete", width=7, command=self.delete_request)
-        deleteButton.grid(row=3, column=2, sticky=W)
+        deleteButton.grid(row=4, column=2, sticky=W)
 
         allRequests = MainCalendar.load_all_requests()
         for request in sorted(allRequests):
-            self.requestView.insert(END, request)
+            self.requestView.insert(END, allRequests[request][-1].get_name()+" - "+request)
 
         # Initalize central frame widgets
         appHighlightFont = font.Font(family='Helvetica', size=14, weight='bold')
@@ -174,7 +177,7 @@ class MainWindow():
         :return: None
         """
         try:
-            request_name = self.requestView.get(self.requestView.curselection())
+            request_name = self.requestView.get(self.requestView.curselection()).split(" - ")[1]
             if messagebox.askokcancel("Confirmation",
                                       "Do you want to delete %s?" % self.requestView.get(
                                           self.requestView.curselection())):
@@ -382,7 +385,7 @@ class MainWindow():
 
         if request == None:
             try:
-                selectedRequest = self.requestView.get(self.requestView.curselection()[0])
+                selectedRequest = self.requestView.get(self.requestView.curselection()).split(" - ")[1]
             except:
                 return
         else:
