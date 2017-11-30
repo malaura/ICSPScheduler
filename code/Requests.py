@@ -1,6 +1,7 @@
 import csv
 import os
 import shutil
+from stat import S_IREAD, S_IRGRP, S_IROTH
 
 
 class Requests:
@@ -123,6 +124,7 @@ class Requests:
                         self.lis_of_duplicate_request.append(self.dictionary['%s' % line['date']][0])
                     self.dictionary['%s' % line['date']] = []
                     self.dictionary['%s' % line['date']].append(request)
+        os.chmod('requests.csv', S_IREAD|S_IRGRP|S_IROTH)
         for request in self.lis_of_duplicate_request:
             self.delete_request(request)
 
