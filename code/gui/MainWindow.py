@@ -230,6 +230,7 @@ class MainWindow():
         delete the student from the folder as well as the app.
         :return: None
         """
+        self.updateCalendar()
         try:
             name = self.studentView.get(self.studentView.curselection())
             if messagebox.askokcancel("Confirmation", "Do you want to delete %s?"%self.studentView.get(self.studentView.curselection())):
@@ -259,6 +260,7 @@ class MainWindow():
 
         :return:
         '''
+        self.updateCalendar()
         if self.requestWindowOpen:
             return
 
@@ -647,3 +649,8 @@ class MainWindow():
         self.requestView.delete(0, END)
         for request in sorted(allRequests):
             self.requestView.insert(END, allRequests[request][-1].get_name()+" - "+request)
+
+        self.students = MainCalendar.load_all_student()
+        self.studentView.delete(0, END)
+        for student in sorted(self.students):
+            self.studentView.insert(END, student)
