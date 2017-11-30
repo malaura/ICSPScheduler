@@ -59,8 +59,8 @@ class MainWindow():
 
         menu = Menu(self.root)
         if sys.platform == 'darwin':
-            self.root.maxsize(height=361, width=self.width+400)
-            self.root.minsize(height=361, width=self.width+150)
+            self.root.maxsize(height=400, width=self.width+150)
+            self.root.minsize(height=400, width=self.width+150)
 
         self.root.config(menu=menu, background="gray90")
 
@@ -72,11 +72,11 @@ class MainWindow():
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=self.root.destroy)
 
-        self.leftFrame = ttk.Frame(self.root, width=self.width/3, height=300)
+        self.leftFrame = ttk.Frame(self.root, width=self.width/3, height=400)
         self.leftFrame.grid(row=0, column=0, sticky=NS)
-        self.centralFrame = ttk.Frame(self.root, width=self.width/3, height=300)
+        self.centralFrame = ttk.Frame(self.root, width=self.width/3, height=400)
         self.centralFrame.grid(row=0, column=1, sticky=NS)
-        self.rightFrame = ttk.Frame(self.root, width=self.width/3, height=300)
+        self.rightFrame = ttk.Frame(self.root, width=self.width/3, height=400)
         self.rightFrame.grid(row=0, column=2, sticky=NS)
 
         # Initalize left frame widgets
