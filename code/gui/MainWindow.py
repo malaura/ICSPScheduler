@@ -167,8 +167,14 @@ class MainWindow():
         addButton.grid(row=2, column=0, sticky=E)
         removeButton = ttk.Button(self.rightFrame, text="Delete", width=7, command = self.delete_student)
         removeButton.grid(row=2, column=1, sticky=W)
-        openButton = ttk.Button(self.rightFrame, text="Open", width=10, command=lambda: self.students[self.studentView.get(self.studentView.curselection()[0])].open_file())
+        openButton = ttk.Button(self.rightFrame, text="Open", width=10, command= self.openStudent)
         openButton.grid(column=0, columnspan=2, row=3)
+
+    def openStudent(self):
+        try:
+            self.students[self.studentView.get(self.studentView.curselection()[0])].open_file()
+        except:
+            pass
 
     def delete_request(self):
         """
