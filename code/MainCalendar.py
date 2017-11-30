@@ -26,14 +26,15 @@ class MainCalendar():
         dictionary = {}
         list_of_wrong_name = []
         for name in list_name:
-            directory_of_one_student = os.path.join('Students', name)
-            student_name = name[:-4]
-            student = Student(directory_of_one_student)
-            if student.get_validation():
-                dictionary[student_name] = student
-            else:
-                list_of_wrong_name.append(name)
-                list_of_wrong_name.append(student.get_validation_info())
+            if not name.startswith('.'):
+                directory_of_one_student = os.path.join('Students', name)
+                student_name = name[:-4]
+                student = Student(directory_of_one_student)
+                if student.get_validation():
+                    dictionary[student_name] = student
+                else:
+                    list_of_wrong_name.append(name)
+                    list_of_wrong_name.append(student.get_validation_info())
 
         if len(list_of_wrong_name) != 0:
             return list_of_wrong_name
