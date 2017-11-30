@@ -181,6 +181,7 @@ class MainWindow():
         Delete an existing request.
         :return: None
         """
+        self.updateCalendar()
         try:
             request_name = self.requestView.get(self.requestView.curselection()).split(" - ")[1]
             if messagebox.askokcancel("Confirmation",
@@ -393,7 +394,8 @@ class MainWindow():
 
         :return:
         '''
-
+        self.updateCalendar()
+        
         if self.requestWindowOpen:
             return
 
