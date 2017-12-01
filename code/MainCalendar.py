@@ -50,7 +50,7 @@ class MainCalendar():
         #load_csv_file
         #create_student
 
-        :return: dictionary of students
+        :return: dictionary of students objects
         """
         students = MainCalendar.load_csv_files_in_directory('Students')
         return students
@@ -62,8 +62,8 @@ class MainCalendar():
         Uses the dictionary_of_time_interval to find if the specific time interval time is
         available for the student.
 
-        :param request: request object
-        :param students: dictionary that contains all the students
+        :param request - request object
+        :param students - dictionary of student objects
         :return: list of student object: list of all available students
         """
         lis = []
@@ -95,8 +95,8 @@ class MainCalendar():
         """
         Sets a student to a request by callind the add_request method in student.
 
-        :param request: object request
-        :param student: the student who is going to have the request
+        :param request - request object: request to be assigned
+        :param student - student object: the student who is going to have the request
         :return: None
         """
 
@@ -108,7 +108,7 @@ class MainCalendar():
         """
         Loads all of the requests in dictionary format.
 
-        :return: dictionary of requests
+        :return: dictionary of request objects
         """
 
         requests = Requests()
@@ -120,9 +120,9 @@ class MainCalendar():
         Finds the assigned students for a particular request.
         Calls on the student's method check_request.
 
-        :param students: dictionary of all the student objects
-        :param request: request object
-        :return: list of the names of the assigned students
+        :param students - dictionary of student objects
+        :param request - request object
+        :return: list of strings: the names of the assigned students
         """
         lis = []
         for student in students:
