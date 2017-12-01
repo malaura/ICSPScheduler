@@ -175,13 +175,14 @@ class MainWindow():
             self.students[self.studentView.get(self.studentView.curselection()[0])].open_file()
         except:
             pass
+        self.updateCalendar()
+
 
     def delete_request(self):
         """
         Delete an existing request.
         :return: None
         """
-        self.updateCalendar()
         try:
             request_name = self.requestView.get(self.requestView.curselection()).split(" - ")[1]
             if messagebox.askokcancel("Confirmation",
@@ -195,8 +196,7 @@ class MainWindow():
                     if self.students[student].check_request(single_request[request_name][0].get_name()):
                         self.students[student].delete_request(single_request[request_name][0])
                 all_request.delete_request(single_request[request_name][0])
-                self.updateCalendar()
-        except :
+        except:
             pass
 
     def add_student(self):
@@ -231,14 +231,16 @@ class MainWindow():
         delete the student from the folder as well as the app.
         :return: None
         """
-        self.updateCalendar()
         try:
             name = self.studentView.get(self.studentView.curselection())
             if messagebox.askokcancel("Confirmation", "Do you want to delete %s?"%self.studentView.get(self.studentView.curselection())):
                 if name != "":
-                    self.students[name].delete_file()
-                    del self.students[name]
                     self.studentView.delete(self.studentView.curselection())
+                    self.updateCalendar()
+                    if name in self.students:
+                        self.students[name].delete_file()
+                        del self.students[name]
+                    self.updateCalendar()
         except:
             pass
 
@@ -394,16 +396,15 @@ class MainWindow():
 
         :return:
         '''
-        self.updateCalendar()
-        
+
         if self.requestWindowOpen:
             return
 
         if request == None:
-            try:
-                selectedRequest = self.requestView.get(self.requestView.curselection()).split(" - ")[1]
-            except:
-                return
+            print(self.requestView.curselection())
+            print("Before error")
+            selectedRequest = self.requestView.get(self.requestView.curselection()).split(" - ")[1]
+
         else:
             selectedRequest = request
 
