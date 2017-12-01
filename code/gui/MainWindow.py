@@ -489,6 +489,18 @@ class MainWindow():
             Prompt(self, "Invalid Input", "Please fill all of the fields for the end time for the request")
             return False
 
+        days = []
+        for day in self.calendar.itermonthdays(self.currentYear, self.currentMonth):
+            if day < 10:
+                days.append("0" + str(day))
+            else:
+                days.append(str(day))
+
+        date = self.monthInput.get()+"/"+self.dayInput.get()+"/"+str(self.currentYear)
+        if date.split("/")[1] not in days:
+            Prompt(self, "Invalid Date", "The day selected is not valid for the month selected.")
+            return False
+
         # If the end time is greater than the start time
         if self.startHourInput.get() + self.startMinuteInput.get() >= self.endHourInput.get() + self.endMinuteInput.get():
             Prompt(self, "Invalid Input", "Start time must happen before the end time of the request ")
