@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb911094-2e77-42ec-a150-ba4739669b85" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ICSPScheduler.iml" afterPath="$PROJECT_DIR$/.idea/ICSPScheduler.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Students/ABC.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Students/Katrina.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Students/Syd.csv" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/gui/MainWindow.py" afterPath="$PROJECT_DIR$/code/gui/MainWindow.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Students/Jared.csv" afterPath="$PROJECT_DIR$/Students/Jared.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/Student.py" afterPath="$PROJECT_DIR$/code/Student.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requests.csv" afterPath="$PROJECT_DIR$/requests.csv" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,7 +44,7 @@
       <file leaf-file-name="testStudent.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/testStudent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1170">
+            <state relative-caret-position="405">
               <caret line="79" column="25" lean-forward="false" selection-start-line="79" selection-start-column="25" selection-end-line="79" selection-end-column="25" />
               <folding />
             </state>
@@ -71,14 +73,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainWindow.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainWindow.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/gui/MainWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="501" column="24" lean-forward="true" selection-start-line="501" selection-start-column="24" selection-end-line="501" selection-end-column="24" />
+            <state relative-caret-position="146">
+              <caret line="420" column="41" lean-forward="true" selection-start-line="420" selection-start-column="41" selection-end-line="420" selection-end-column="41" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/tkinter/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="101">
+              <caret line="2791" column="0" lean-forward="false" selection-start-line="2791" selection-start-column="0" selection-end-line="2791" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -93,39 +105,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Student.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Student.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/code/Student.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3810">
-              <caret line="254" column="121" lean-forward="false" selection-start-line="254" selection-start-column="118" selection-end-line="254" selection-end-column="121" />
+            <state relative-caret-position="168">
+              <caret line="178" column="0" lean-forward="false" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainCalendar.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/MainCalendar.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="87" column="14" lean-forward="false" selection-start-line="87" selection-start-column="14" selection-end-line="87" selection-end-column="14" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="code_stubFunctions_py.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/htmlcov/code_stubFunctions_py.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="344" column="75" lean-forward="false" selection-start-line="344" selection-start-column="75" selection-end-line="344" selection-end-column="75" />
-              <folding>
-                <element signature="e#19425#19431#1" expanded="true" />
-                <element signature="e#21173#21179#1" expanded="true" />
-                <element signature="e#23079#23085#1" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -142,7 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>request</find>
       <find>find_available_students</find>
       <find>load_all</find>
       <find>bufferStartInput</find>
@@ -172,6 +157,7 @@
       <find>self.update</find>
       <find>open</find>
       <find>day</find>
+      <find>load_all_stude</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -197,13 +183,13 @@
         <option value="$PROJECT_DIR$/tests/testRequests.py" />
         <option value="$PROJECT_DIR$/tests/testStudent.py" />
         <option value="$PROJECT_DIR$/code/__init__.py" />
-        <option value="$PROJECT_DIR$/code/Student.py" />
         <option value="$PROJECT_DIR$/code/gui/MainWindow.py" />
+        <option value="$PROJECT_DIR$/code/Student.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="41" />
+    <option name="x" value="-67" />
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="737" />
@@ -411,13 +397,13 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="41" y="23" width="1280" height="737" extended-state="0" />
+    <frame x="-67" y="23" width="1280" height="737" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24609375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.46766916" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2706767" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -670,7 +656,7 @@
         <state relative-caret-position="60">
           <caret line="4" column="8" lean-forward="false" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#0#21#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -680,9 +666,9 @@
         <state relative-caret-position="205">
           <caret line="344" column="75" lean-forward="false" selection-start-line="344" selection-start-column="75" selection-end-line="344" selection-end-column="75" />
           <folding>
-            <element signature="e#19425#19431#1" expanded="true" />
-            <element signature="e#21173#21179#1" expanded="true" />
-            <element signature="e#23079#23085#1" expanded="true" />
+            <element signature="e#19425#19431#1" expanded="false" />
+            <element signature="e#21173#21179#1" expanded="false" />
+            <element signature="e#23079#23085#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -707,7 +693,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/testStudent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1170">
+        <state relative-caret-position="405">
           <caret line="79" column="25" lean-forward="false" selection-start-line="79" selection-start-column="25" selection-end-line="79" selection-end-column="25" />
           <folding />
         </state>
@@ -731,22 +717,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/Student.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3810">
-          <caret line="254" column="121" lean-forward="false" selection-start-line="254" selection-start-column="118" selection-end-line="254" selection-end-column="121" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/MainCalendar.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="87" column="14" lean-forward="false" selection-start-line="87" selection-start-column="14" selection-end-line="87" selection-end-column="14" />
+        <state relative-caret-position="57">
+          <caret line="13" column="8" lean-forward="false" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -761,10 +737,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/code/gui/MainWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="501" column="24" lean-forward="true" selection-start-line="501" selection-start-column="24" selection-end-line="501" selection-end-column="24" />
+        <state relative-caret-position="146">
+          <caret line="420" column="41" lean-forward="true" selection-start-line="420" selection-start-column="41" selection-end-line="420" selection-end-column="41" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/Student.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="178" column="0" lean-forward="false" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -176,6 +176,8 @@ class Student:
         :param name: the request's name
         :return: True if the request is assigned to this student, otherwise False.
         """
+        if not os.path.isfile(self.directory):
+            return False
         with open(self.directory, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
             for line in csv_reader:
