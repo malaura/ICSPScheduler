@@ -401,8 +401,6 @@ class MainWindow():
             return
 
         if request == None:
-            print(self.requestView.curselection())
-            print("Before error")
             selectedRequest = self.requestView.get(self.requestView.curselection()).split(" - ")[1]
 
         else:
@@ -666,6 +664,12 @@ class MainWindow():
             self.requestView.insert(END, allRequests[request][-1].get_name()+" - "+request)
 
         self.students = MainCalendar.load_all_student()
+        if isinstance(self.students, list):
+            badFiles = []
+            for i in range(0,len(self.students), 2):
+                badFiles.append(self.students[i])
+            Prompt(self, "Incorrect Student File", "The following files are incorrectly formatted: "+", ".join(badFiles)+".\n Please correct the files and restart the program")
+            return
         self.studentView.delete(0, END)
         for student in sorted(self.students):
             self.studentView.insert(END, student)
