@@ -41,32 +41,6 @@ class MainCalendar():
         else:
             return dictionary
 
-
-
-
-    def update_student(self, file_name, student):
-        """
-        Updates a student object. Validates if all of the data is correct if passed in a file name.
-
-        # Calls on create_calendar to create calendar for the student
-
-        :param filename: csv file name of student's schedule
-        :return:   boolean: true if it was successful, false if it wasn't
-                   student object: student object creating
-                   string: what is the error occurred
-
-        ex.
-            True, <student object>
-            False, 'MariaRodriguez.csv is already in the directory'
-        """
-        list_name = os.listdir('Students')
-        for name in list_name:
-            if file_name == name:
-                return False, '%s is already in the directory' % file_name
-        directory_of_file_name = os.path.join('Students', file_name)
-        student = Student(directory_of_file_name)
-        return True, student
-
     @staticmethod
     def load_all_student():
         """
@@ -79,17 +53,18 @@ class MainCalendar():
         :return: dictionary of students
         """
         students = MainCalendar.load_csv_files_in_directory('Students')
-        # students['Jim'].get_dictionary_of_schedule()  # to get students' schedule list
-        # students['Jim'].get_dictionary_of_time_interval()  # to get students' time interval object
         return students
 
     @staticmethod
     def find_available_students(students, request):
         """
-        find the available student for a specific time
-        :param request: object request
+        Finds the available student for a specific time.
+        Uses the dictionary_of_time_interval to find if the specific time interval time is
+        available for the student.
+
+        :param request: request object
         :param students: dictionary that contains all the students
-        :return: list of all available students
+        :return: list of student object: list of all available students
         """
         lis = []
         date = request.get_date()
@@ -118,6 +93,7 @@ class MainCalendar():
     @staticmethod
     def set_student_to_request(student, request):
         """
+        Sets a student to a request by callind the add_request method in student.
 
         :param request: object request
         :param student: the student who is going to have the request
@@ -130,6 +106,7 @@ class MainCalendar():
     @staticmethod
     def load_all_requests():
         """
+        Loads all of the requests in dictionary format.
 
         :return: dictionary of requests
         """
@@ -140,7 +117,9 @@ class MainCalendar():
     @staticmethod
     def find_assigned_student(students, request):
         """
-        find the assigned students
+        Finds the assigned students for a particular request.
+        Calls on the student's method check_request.
+
         :param students: dictionary of all the student objects
         :param request: request object
         :return: list of the names of the assigned students

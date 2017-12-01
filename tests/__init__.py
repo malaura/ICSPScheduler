@@ -1,2 +1,1 @@
-from testmain import *
-from testStudent import *
+#from testStudent import *

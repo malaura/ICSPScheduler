@@ -171,6 +171,11 @@ class MainWindow():
         openButton.grid(column=0, columnspan=2, row=3)
 
     def openStudent(self):
+        '''
+        Opens the student's schedule with the default csv opening application
+
+        :return:
+        '''
         try:
             self.students[self.studentView.get(self.studentView.curselection()[0])].open_file()
         except:
@@ -180,7 +185,9 @@ class MainWindow():
 
     def delete_request(self):
         """
-        Delete an existing request.
+        Deletes an existing request. Updates the MainWindow's attributes by calling the MainCalendar,
+        updates the calendar view.
+
         :return: None
         """
         try:
@@ -202,7 +209,10 @@ class MainWindow():
 
     def add_student(self):
         """
-        Add a new student to the folder as well as the app.
+        Adds a new student to the folder as well as the app.
+        Creates a new student object, updates the studentView.
+        Shows prompt if the file is not in the correct format.
+
         :return: None
         """
         file = filedialog.askopenfilename(initialdir="/", title="Select file",
@@ -229,7 +239,11 @@ class MainWindow():
 
     def delete_student(self):
         """
-        delete the student from the folder as well as the app.
+        Deletes the student from the directory as well as the app.
+        Displays a confirmation prompt to confirm the changes, calls the delete_file() method from
+        the student object.
+        Calls on updateCalendar to update the calendar view.
+
         :return: None
         """
         try:
@@ -248,7 +262,7 @@ class MainWindow():
     def closeWindow(self):
         '''
         Closes the window prompt.
-        Sets the promptWindowOpen attribute from MainWindow to false
+        Sets the requestWindowOpen attribute from MainWindow to false
 
         :return:
         '''
@@ -520,6 +534,7 @@ class MainWindow():
         '''
         Calls on the MainCalendar class to find the students that
         are available during the times entered in the new request window.
+        Does some validation if the date is invalid or if there is an existing request for that date.
 
         :return:
         '''
