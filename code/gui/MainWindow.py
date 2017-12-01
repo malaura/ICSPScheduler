@@ -59,8 +59,8 @@ class MainWindow():
 
         menu = Menu(self.root)
         if sys.platform == 'darwin':
-            self.root.maxsize(height=400, width=self.width+150)
-            self.root.minsize(height=400, width=self.width+150)
+            self.root.maxsize(height=400, width=self.width+180)
+            self.root.minsize(height=400, width=self.width+180)
 
         self.root.config(menu=menu, background="gray90")
 
