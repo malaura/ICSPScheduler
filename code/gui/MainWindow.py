@@ -553,7 +553,8 @@ class MainWindow():
         self.availableStudents = MainCalendar.find_available_students(self.students, self.request)
         self.availableView.delete(0, END)
         for student in self.availableStudents:
-            self.availableView.insert(END, student)
+            if student not in self.availableView.get(0, END) and student not in self.assignedView.get(0, END):
+                self.availableView.insert(END, student)
 
     def assignStudent(self):
         '''
