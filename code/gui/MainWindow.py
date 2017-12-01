@@ -196,6 +196,7 @@ class MainWindow():
                     if self.students[student].check_request(single_request[request_name][0].get_name()):
                         self.students[student].delete_request(single_request[request_name][0])
                 all_request.delete_request(single_request[request_name][0])
+                self.updateCalendar()
         except:
             pass
 
@@ -400,57 +401,61 @@ class MainWindow():
         if self.requestWindowOpen:
             return
 
-        if request == None:
-            selectedRequest = self.requestView.get(self.requestView.curselection()).split(" - ")[1]
+        try:
+            if request == None:
+                selectedRequest = self.requestView.get(self.requestView.curselection()).split(" - ")[1]
 
-        else:
-            selectedRequest = request
+            else:
+                selectedRequest = request
 
-        allRequests = MainCalendar.load_all_requests()
-        selectedRequest = allRequests[selectedRequest][-1]
-        self.prompt = Toplevel(self.root)
-        self.prompt.protocol("WM_DELETE_WINDOW", self.closeWindow)
-        self.prompt.minsize(width=200, height=300)
-        self.prompt.maxsize(width=450, height=500)
-        self.prompt.title('View Request')
-        self.prompt.configure(background="gray90")
-        requestName = selectedRequest.get_name()
+            allRequests = MainCalendar.load_all_requests()
+            selectedRequest = allRequests[selectedRequest][-1]
+            self.prompt = Toplevel(self.root)
+            self.prompt.protocol("WM_DELETE_WINDOW", self.closeWindow)
+            self.prompt.minsize(width=200, height=300)
+            self.prompt.maxsize(width=450, height=500)
+            self.prompt.title('View Request')
+            self.prompt.configure(background="gray90")
+            requestName = selectedRequest.get_name()
 
-        assignedStudents = []
-        for name in self.students:
-            if self.students[name].check_request(requestName):
-                assignedStudents.append(name)
+            assignedStudents = []
+            for name in self.students:
+                if self.students[name].check_request(requestName):
+                    assignedStudents.append(name)
 
-        padding = ttk.Label(self.prompt, text="  ")
-        padding.grid(row=2, column=1, sticky="e")
-        appHighlightFont = font.Font(family='Helvetica', size=18, weight='bold')
-        titleLabel = ttk.Label(self.prompt, text=requestName, font=appHighlightFont)
-        titleLabel.grid(row=0, column=2, columnspan=4, sticky="E", pady=40, padx=40)
-        dateLabel = ttk.Label(self.prompt, text="Date:")
-        dateLabel.grid(row=1, column=2, sticky="e")
-        date = selectedRequest.get_date()
-        dateEntry = ttk.Label(self.prompt, text=date)
-        dateEntry.grid(row=1, column=3, sticky="e")
-        startLabel = ttk.Label(self.prompt, text="Start Time:")
-        startLabel.grid(row=2, column=2, sticky="e")
-        startEntry = ttk.Label(self.prompt, text=selectedRequest.get_start_time())
-        startEntry.grid(row=2, column=3, sticky="e")
-        endLabel = ttk.Label(self.prompt, text="End Time:")
-        endLabel.grid(row=3, column=2, sticky="e")
-        endEntry = ttk.Label(self.prompt, text=selectedRequest.get_end_time())
-        endEntry.grid(row=3, column=3, sticky="e")
-        if len(assignedStudents) == 0:
-            studentTitle = ""
-        elif len(assignedStudents) == 1:
-            studentTitle = "Student:"
-        else:
-            studentTitle = "Students:"
-        studentLabel = ttk.Label(self.prompt, text=studentTitle)
-        studentLabel.grid(row=4, column=2, sticky="e")
-        for index in range(len(assignedStudents)):
-            studentLabel = ttk.Label(self.prompt, text=assignedStudents[index])
-            studentLabel.grid(row=4+index, column=3, sticky="e")
-        self.requestWindowOpen = True
+            padding = ttk.Label(self.prompt, text="  ")
+            padding.grid(row=2, column=1, sticky="e")
+            appHighlightFont = font.Font(family='Helvetica', size=18, weight='bold')
+            titleLabel = ttk.Label(self.prompt, text=requestName, font=appHighlightFont)
+            titleLabel.grid(row=0, column=2, columnspan=4, sticky="E", pady=40, padx=40)
+            dateLabel = ttk.Label(self.prompt, text="Date:")
+            dateLabel.grid(row=1, column=2, sticky="e")
+            date = selectedRequest.get_date()
+            dateEntry = ttk.Label(self.prompt, text=date)
+            dateEntry.grid(row=1, column=3, sticky="e")
+            startLabel = ttk.Label(self.prompt, text="Start Time:")
+            startLabel.grid(row=2, column=2, sticky="e")
+            startEntry = ttk.Label(self.prompt, text=selectedRequest.get_start_time())
+            startEntry.grid(row=2, column=3, sticky="e")
+            endLabel = ttk.Label(self.prompt, text="End Time:")
+            endLabel.grid(row=3, column=2, sticky="e")
+            endEntry = ttk.Label(self.prompt, text=selectedRequest.get_end_time())
+            endEntry.grid(row=3, column=3, sticky="e")
+            if len(assignedStudents) == 0:
+                studentTitle = ""
+            elif len(assignedStudents) == 1:
+                studentTitle = "Student:"
+            else:
+                studentTitle = "Students:"
+            studentLabel = ttk.Label(self.prompt, text=studentTitle)
+            studentLabel.grid(row=4, column=2, sticky="e")
+            for index in range(len(assignedStudents)):
+                studentLabel = ttk.Label(self.prompt, text=assignedStudents[index])
+                studentLabel.grid(row=4+index, column=3, sticky="e")
+            self.requestWindowOpen = True
+
+        except:
+            pass
 
     def validateFields(self):
         '''
