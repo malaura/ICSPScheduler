@@ -2,7 +2,7 @@
 Scheduler for the International Cultural Service Program at the University of Oregon
 
 All application code can be found in code directory <br>
-All coverage testing code can be found tests directory <br>
+All coverage testing code can be found in tests directory <br>
 Program can be run from command line by typing <br>
 python main.py <br>
 Our program requires Python3, PIP or equivalent package installer, Tkinter package, and IntervalTree<br>
