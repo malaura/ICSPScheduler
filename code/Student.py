@@ -71,7 +71,7 @@ class Student:
         '''
         Getter for the student's schedule file directory
 
-        :return: dictionary
+        :return: string
         '''
         return self.directory
 
