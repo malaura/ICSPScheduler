@@ -563,8 +563,11 @@ class MainWindow():
 
         :return:
         '''
-        self.assignedView.insert(END, self.availableView.get(self.availableView.curselection()[0]))
-        self.availableView.delete(self.availableView.curselection()[0])
+        try:
+            self.assignedView.insert(END, self.availableView.get(self.availableView.curselection()[0]))
+            self.availableView.delete(self.availableView.curselection()[0])
+        except:
+            pass
 
     def removeStudent(self):
         '''
@@ -572,9 +575,12 @@ class MainWindow():
 
         :return:
         '''
-        self.availableView.insert(END, self.assignedView.get(self.assignedView.curselection()[0]))
-        self.assignedView.delete(self.assignedView.curselection()[0])
-
+        try:
+            self.availableView.insert(END, self.assignedView.get(self.assignedView.curselection()[0]))
+            self.assignedView.delete(self.assignedView.curselection()[0])
+        except:
+            pass
+            
     def confirmRequest(self):
         '''
         Confirms a request. Validates all of the field data by calling validateFields(),
