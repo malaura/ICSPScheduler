@@ -642,15 +642,12 @@ class MainWindow():
         self.updateCalendar()
 
     def prevMonth(self):
-<<<<<<< HEAD
-=======
         '''
         Calculates the previous month from currentMonth and
         displays it by updating the calendar view calling updateCalendar()
 
         :return:
         '''
->>>>>>> develop
         if self.currentMonth == 1:
             self.currentMonth = 12
             self.currentYear -=1
