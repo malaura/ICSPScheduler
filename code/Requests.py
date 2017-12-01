@@ -105,6 +105,7 @@ class Requests:
     def __init__(self):
         '''
         dictionary: contains all of the requests information
+        lis_of_duplicate_request: contains a list with duplicate requests
         '''
 
         self.dictionary = {}
