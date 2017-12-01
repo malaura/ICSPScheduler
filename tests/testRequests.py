@@ -48,9 +48,3 @@ class TestRequests(unittest.TestCase):
         requests = Requests()
         self.assertEqual(len(requests.get_dictionary()), 0)
 
-    #def test_add_request(self):
-     #   request = Requests.Request('test', '11/25/2017', '00:00', '02:00', '00:00', '00:00')
-     #   requests = Requests()
-     #   requests.add_request(request)
-     #   self.assertEqual(len(requests.get_dictionary()), 1)
-

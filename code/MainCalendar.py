@@ -18,7 +18,7 @@ class MainCalendar():
 
         :param directory: os directory
         :return: dictionary - key is string name, value is student objects (that were loaded successfully)
-                 list of lists - file names that were not loaded successfully
+                 list of strings - file names that were not loaded successfully
         ex.
             [[MariaRodriguez.csv, 'Date wasn't in the correct format'], [Jim.csv, 'Munday is not a day of the week']]
         """
