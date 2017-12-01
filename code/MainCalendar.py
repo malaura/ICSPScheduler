@@ -42,117 +42,6 @@ class MainCalendar():
             return dictionary
 
 
-    def update_csv_file(self, filename):
-        """
-        Updates a csv file in the directory
-
-        :param filename: string with the file name
-        :return: boolean: true if it was successful, false if it wasn't
-                 string: specifies the error encountered, empty if no error
-
-        ex.
-            False, 'file MariaRodriguez.csv not found in the directory'
-            True, 'update succeeded'
-        """
-        directory_of_one_student = os.path.join('Students', filename)
-        if os.system('open ./%s' % directory_of_one_student) != 0:
-            return False, 'file %s not found in the directory' % filename
-        else:
-            return True, 'update succeeded'
-
-
-    # Add button
-    def add_csv_file_to_directory(self, filename):
-        """
-        Creates a csv file schedule in the directory for a new student
-
-        :param filename: string with the file name
-        :return:    boolean: true if it was successful, false if it wasn't
-                    string: if boolean is true, string corresponding to csv file created, if false error encountered
-
-        ex.
-            True, 'MariaRodriguez.csv'
-            False, 'MariaRodriguez.csv is already in the directory'
-        """
-        directory_of_one_student = os.path.join('Students', filename)
-        if os.path.exists(directory_of_one_student):
-            return False, '%s is already in the directory' % filename
-        else:
-            with open(directory_of_one_student, 'w') as new_file:
-                fieldnames = ['Date', 'Start', 'End', 'Information']
-                csv_writer = csv.DictWriter(new_file, fieldnames=fieldnames, delimiter=',')
-                csv_writer.writeheader()
-        return True, '%s has been added' % filename
-
-
-    # Don't want to do this right now
-    def rename_csv_file(self, original_name, new_name):
-        """
-        Replaces csv file name with originalName with newName
-
-        :param original_name: original file name in the directory
-        :param new_name:  new file name in the directory
-        :return: boolean: true if it was successful, false if it wasn't
-                 string: if boolean is true, string corresponding to new csv file name, if false error encountered
-
-        ex.
-            True, 'MariaMoreno.csv'
-            False, 'MariaRodriguez.csv is not in the directory'
-        """
-        directory_of_new_name = os.path.join('Students', new_name)
-        directory_of_original_name = os.path.join('Students', original_name)
-        if os.path.exists(directory_of_new_name):
-            return False, '%s is already in the directory' % new_name
-        if not os.path.exists(directory_of_original_name):
-            return False, '%s is not in the directory' % directory_of_original_name
-        shutil.move(directory_of_original_name, directory_of_new_name)
-        os.remove(directory_of_original_name)
-        return True, '%s is created' % new_name
-
-
-    def delete_csv_file(self, file_name):
-        """
-        Delete csv file schedule in the directory
-
-        :param filename: string with the file name
-        :return: boolean: true if it was successful, false if it wasn't
-                 string: if boolean is true, string is empty, if false error encountered
-
-        ex.
-            True, ''
-            False, 'MariaRodriguez.csv is not in the directory'
-        """
-        directory_of_file_name = os.path.join('Students', file_name)
-        if os.path.exists(directory_of_file_name):
-            os.remove(directory_of_file_name)
-            return True, 'Delete succeed'
-        else:
-            return False, '%s is not in the directory' % file_name
-
-
-    def create_student(self, file_name=None):
-        """
-        Creates a student object. Validates if all of the data is correct if passed in a file name.
-        # import csv file
-        # Calls on csv_file_format_validator to validate filename
-        # Calls on create_calendar to create calendar for the student
-
-        :param file_name: csv file name of student's schedule
-        :return:   boolean: true if it was successful, false if it wasn't
-                   student object: student object creating
-                   string: what is the error occurred
-
-        ex.
-            True, <student object>
-            False, 'MariaRodriguez.csv is already in the directory'
-        """
-        list_name = os.listdir('Students')
-        for name in list_name:
-            if file_name == name:
-                return False, '%s is already in the directory' % file_name
-        directory_of_the_student = os.path.join('Students', file_name)
-        student = Student(directory_of_the_student)
-        return True, student
 
 
     def update_student(self, file_name, student):
@@ -177,43 +66,6 @@ class MainCalendar():
         directory_of_file_name = os.path.join('Students', file_name)
         student = Student(directory_of_file_name)
         return True, student
-
-
-    def delete_student(self, student):
-        """
-        Deletes a student object. Validates if all of the data is correct if passed in a file name.
-
-        # Calls on delete_csv_file
-
-        :param student: student object
-        :return: boolean: true
-                 optional string: if false, returns the error encountered
-
-        ex.
-            True, 'delete succeed'
-            False, 'MariaRodriguez.csv is not in the directory'
-        """
-        directory_of_file_name = student.get_directory()
-        if os.path.exists(directory_of_file_name):
-            os.remove(directory_of_file_name)
-            name = student.get_student_name()
-            del student
-            return True, '%s delete succeed' % name
-        else:
-            return False, '%s is not in the directory' % student.get_directory()
-
-
-    def create_calendar(self, student):
-        """
-        Takes in a csv file that is already in the correct format, and returns a dictionary that represents a calendar.
-
-        :param student: student object
-        :return: dictionary: The key is a date
-                            value is interval tree object.
-                 dictionary: Monday, Tuesday, Wednesday ... keys
-        """
-
-        return student.get_dictionary_of_time_interval()
 
     @staticmethod
     def load_all_student():
@@ -274,16 +126,6 @@ class MainCalendar():
 
         student.add_request(request)
         return
-
-    def delete_request_from_student(self, student, request):
-        """
-
-        :param request: object request
-        :param student: the student who is going to have the request
-        :return: None
-        """
-
-        student.delete_request(request)
 
     @staticmethod
     def load_all_requests():
