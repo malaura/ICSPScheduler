@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb911094-2e77-42ec-a150-ba4739669b85" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Students/ABC.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Students/Jared.csv" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Students/JimLi.csv" afterPath="$PROJECT_DIR$/Students/JimLi.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Students/Syd.csv" afterPath="$PROJECT_DIR$/Students/Syd.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/MainCalendar.py" afterPath="$PROJECT_DIR$/code/MainCalendar.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/gui/MainWindow.py" afterPath="$PROJECT_DIR$/code/gui/MainWindow.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requests.csv" afterPath="$PROJECT_DIR$/requests.csv" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -62,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainWindow.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainWindow.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/code/gui/MainWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6869">
-              <caret line="196" column="42" lean-forward="true" selection-start-line="196" selection-start-column="42" selection-end-line="196" selection-end-column="42" />
+            <state relative-caret-position="285">
+              <caret line="608" column="166" lean-forward="false" selection-start-line="608" selection-start-column="166" selection-end-line="608" selection-end-column="166" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -84,10 +83,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainCalendar.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainCalendar.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/MainCalendar.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-30">
+            <state relative-caret-position="1770">
               <caret line="127" column="14" lean-forward="false" selection-start-line="127" selection-start-column="14" selection-end-line="127" selection-end-column="14" />
               <folding />
             </state>
@@ -144,7 +143,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>find_available_students</find>
       <find>load_all</find>
       <find>bufferStartInput</find>
       <find>editPrompt</find>
@@ -174,6 +172,7 @@
       <find>open</find>
       <find>day</find>
       <find>load_all_stude</find>
+      <find>confirm</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -198,16 +197,16 @@
         <option value="$PROJECT_DIR$/tests/testRequests.py" />
         <option value="$PROJECT_DIR$/tests/testStudent.py" />
         <option value="$PROJECT_DIR$/code/__init__.py" />
-        <option value="$PROJECT_DIR$/code/gui/MainWindow.py" />
         <option value="$PROJECT_DIR$/code/Student.py" />
         <option value="$PROJECT_DIR$/code/MainCalendar.py" />
+        <option value="$PROJECT_DIR$/code/gui/MainWindow.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-52" />
     <option name="y" value="25" />
-    <option name="width" value="1280" />
+    <option name="width" value="1332" />
     <option name="height" value="737" />
   </component>
   <component name="ProjectView">
@@ -413,10 +412,10 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-52" y="25" width="1280" height="737" extended-state="0" />
+    <frame x="-52" y="25" width="1332" height="737" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24609375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23648648" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2706767" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -753,21 +752,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/gui/MainWindow.py">
+    <entry file="file://$PROJECT_DIR$/code/MainCalendar.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6869">
-          <caret line="196" column="42" lean-forward="true" selection-start-line="196" selection-start-column="42" selection-end-line="196" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1770">
+          <caret line="127" column="14" lean-forward="false" selection-start-line="127" selection-start-column="14" selection-end-line="127" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/MainCalendar.py">
+    <entry file="file://$PROJECT_DIR$/code/gui/MainWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-30">
-          <caret line="127" column="14" lean-forward="false" selection-start-line="127" selection-start-column="14" selection-end-line="127" selection-end-column="14" />
-          <folding />
+        <state relative-caret-position="285">
+          <caret line="608" column="166" lean-forward="false" selection-start-line="608" selection-start-column="166" selection-end-line="608" selection-end-column="166" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -599,9 +599,15 @@ class MainWindow():
                   "0:"+str(self.bufferStartInput.get()),
                   "0:"+str(self.bufferEndInput.get()))
 
+        availableStudents = MainCalendar.find_available_students(self.students, self.request)
+
+
         studentSchedules = MainCalendar.load_all_student()
         self.requests.add_request(self.request)
         for student in self.assignedView.get(0, END):
+            if student not in availableStudents:
+                Prompt(self, "Invalid Student", student + " is not available for this request, please make sure you search again if you change the time of the request.")
+                return
             MainCalendar.set_student_to_request(studentSchedules[student], self.request)
         self.closeWindow()
         self.updateCalendar()
