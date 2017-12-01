@@ -1,7 +1,7 @@
 import csv
 import os
 import shutil
-from stat import S_IREAD, S_IRGRP, S_IROTH
+from stat import S_IREAD, S_IRGRP, S_IROTH, S_IWUSR
 
 
 class Requests:
@@ -147,7 +147,7 @@ class Requests:
         :param request: object request
         :return: None
         """
-
+        os.chmod('requests.csv', S_IWUSR | S_IREAD)
         with open('requests.csv', 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
 
@@ -170,6 +170,7 @@ class Requests:
         except:
             self.dictionary[request.get_date()] = []
             self.dictionary[request.get_date()].append(request)
+        os.chmod('requests.csv', S_IREAD | S_IRGRP | S_IROTH)
 
     def delete_request(self, request):
         """
@@ -178,7 +179,7 @@ class Requests:
         :param request: object request
         :return: None
         """
-
+        os.chmod('requests.csv', S_IWUSR | S_IREAD)
         with open('requests.csv', 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
 
@@ -202,6 +203,7 @@ class Requests:
 
         if not self.dictionary[date]:
             del self.dictionary[date]
+        os.chmod('requests.csv', S_IREAD | S_IRGRP | S_IROTH)
 
     def get_dictionary(self):
         '''
